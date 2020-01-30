@@ -1,72 +1,43 @@
 import 'dart:async';
 import 'package:bloc/bloc.dart';
+import 'package:gta_flutter/database/category_dao.dart';
 import 'category_event.dart';
 import 'category_state.dart';
 class CategoryBloc extends Bloc<CategoryEvent, CategoryState> {
-  @override
-  // TODO: implement initialState
-  CategoryState get initialState => null;
+
+  CategoryDao _categoryDao = CategoryDao();
 
   @override
-  Stream<CategoryState> mapEventToState(CategoryEvent event) {
-    // TODO: implement mapEventToState
-    return null;
-  }/*
-  QrCodeDao _qrCodeDao = QrCodeDao();
-  CreationDao _creationDao = CreationDao();
+  CategoryState get initialState => CategoryLoadingState();
 
-  // Display a loading indicator right from the start of the app
   @override
-  QrCodeState get initialState => QrCodeLoading();
-
-  // This is where we place the logic.
-  @override
-  Stream<QrCodeState> mapEventToState(
-      QrCodeEvent event,
+  Stream<CategoryState> mapEventToState(
+      CategoryEvent event,
       ) async* {
-    if (event is LoadQrCodes) {
-      yield QrCodeLoading();
-      yield* _reloadQrCode();
+    if (event is LoadCategoriesEvent) {
+      yield CategoryLoadingState();
+      yield* _reloadCategories();
     }
 
-    else if (event is LoadFreeQrCodes){
-      yield QrCodeLoading();
-      yield* _reloadFreeQrCode();
+    else if (event is CreateCategoryEvent){
+      await _categoryDao.insert(event.category);
+      yield* _reloadCategories();
     }
 
-    else if (event is CreateQrCode){
-      await _qrCodeDao.insert(event.qrCode);
-      yield* _reloadQrCode();
+    else if (event is UpdateCategoryEvent){
+      await _categoryDao.update(event.category);
+      yield* _reloadCategories();
     }
 
-    else if (event is UpdateQrCode){
-      await _qrCodeDao.update(event.updatedQrCode);
-      yield* _reloadQrCode();
-    }
-
-    else if (event is DeleteQrCode){
-      await _qrCodeDao.delete(event.qrCode);
-      yield* _reloadQrCode();
+    else if (event is DeleteCategoryEvent){
+      await _categoryDao.delete(event.category);
+      yield* _reloadCategories();
     }
   }
 
-  Stream<QrCodeState> _reloadQrCode() async* {
-    final qrCodes = await _qrCodeDao.getAllSortedById();
-    print(qrCodes);
-    yield QrCodeLoaded(qrCodes);
+  Stream<CategoryState> _reloadCategories() async* {
+    final categories = await _categoryDao.getAll();
+
+    yield CategoriesLoadingSuccessState(categories);
   }
-
-  Stream<QrCodeState> _reloadFreeQrCode() async* {
-    var qrCodes = await _qrCodeDao.getAllSortedById();
-    final creations = await _creationDao.getAll();
-
-    final alreadyUsedQrCode = creations.map((creation) => creation.qrCodeId).toList();
-
-    qrCodes.removeWhere((qrCode) =>
-      alreadyUsedQrCode.contains(qrCode.id)
-    );
-
-
-    yield QrCodeLoaded(qrCodes);
-  }*/
 }

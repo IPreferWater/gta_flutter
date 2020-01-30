@@ -7,22 +7,22 @@ abstract class CategoryEvent extends Equatable {
   CategoryEvent([List props = const []]) : super(props);
 }
 
-class LoadCategories extends CategoryEvent {}
+class LoadCategoriesEvent extends CategoryEvent {}
 
-class CreateCategory extends CategoryEvent{
+class CreateCategoryEvent extends CategoryEvent{
   final Category category;
 
-  CreateCategory(this.category) : super ([category]);
+  CreateCategoryEvent(this.category) : super ([category]);
 }
 
-class UpdateCategory extends CategoryEvent{
-  final Category updatedCategory;
-
-  UpdateCategory(this.updatedCategory) : super([updatedCategory]);
-}
-
-class DeleteCategory extends CategoryEvent{
+class UpdateCategoryEvent extends CategoryEvent{
   final Category category;
 
-  DeleteCategory(this.category) : super([category]);
+  UpdateCategoryEvent(this.category) : super([category]);
+}
+
+class DeleteCategoryEvent extends CategoryEvent{
+  final Category category;
+
+  DeleteCategoryEvent(this.category) : super([category]);
 }

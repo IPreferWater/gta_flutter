@@ -4,7 +4,7 @@ import 'package:sembast/sembast.dart';
 
 import 'app_database.dart';
 
-class CreationDao {
+class CategoryDao {
   static const String CATEGORY_STORE_NAME = 'categories';
   final _categoryStore = intMapStoreFactory.store(CATEGORY_STORE_NAME);
 
