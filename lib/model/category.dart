@@ -1,12 +1,12 @@
 import 'package:meta/meta.dart';
 
-class Creation {
+class Category {
 
   int id;
   String label;
   List <String> parameters;
 
-  Creation({
+  Category({
     @required this.label,
     @required this.parameters});
 
@@ -18,9 +18,9 @@ class Creation {
     };
   }
 
-  static Creation fromMap(Map<String, dynamic> map) {
+  static Category fromMap(Map<String, dynamic> map) {
 
-    return Creation(
+    return Category(
         label : map['label'],
         parameters: map['parameters']
     );
