@@ -29,8 +29,7 @@ class _CategoryFormDialogState extends State<CategoryFormDialog> {
     super.initState();
 
     _categoryBloc = BlocProvider.of<CategoryBloc>(context);
-    _categoryBloc.dispatch(LoadCategoriesEvent());
-
+    _categoryBloc.add(LoadCategoriesEvent());
 
     if(this.widget.categoryToUpdate!=null){
       final Category creationToUpdate = widget.categoryToUpdate;
@@ -107,13 +106,13 @@ class _CategoryFormDialogState extends State<CategoryFormDialog> {
                         //TODO: make this code correct
                         if(widget.categoryToUpdate!=null){
                           categoryValided.id = widget.categoryToUpdate.id;
-                          _categoryBloc.dispatch(UpdateCategoryEvent(categoryValided));
+                          _categoryBloc.add(UpdateCategoryEvent(categoryValided));
                         }else{
-                          _categoryBloc.dispatch(UpdateCategoryEvent(categoryValided));
+                          _categoryBloc.add(UpdateCategoryEvent(categoryValided));
                         }
 
                         //in this form we put the state to load only free qrCode, we want to retrieve the other
-                        _categoryBloc.dispatch(LoadCategoriesEvent());
+                        _categoryBloc.add(LoadCategoriesEvent());
                         Navigator.of(context).pop();
                       }
                     },
