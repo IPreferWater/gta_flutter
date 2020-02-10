@@ -83,7 +83,7 @@ class _CategoryFormDialogState extends State<CategoryFormDialog> {
                           categoryValided.id = widget.categoryToUpdate.id;
                           _categoryBloc.add(UpdateCategoryEvent(categoryValided));
                         }else{
-                          _categoryBloc.add(UpdateCategoryEvent(categoryValided));
+                          _categoryBloc.add(CreateCategoryEvent(categoryValided));
                         }
 
                         //in this form we put the state to load only free qrCode, we want to retrieve the other

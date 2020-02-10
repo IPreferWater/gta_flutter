@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:gta_flutter/bloc/category_bloc/bloc.dart';
+import 'package:gta_flutter/screen/HomeScreen.dart';
 import 'package:gta_flutter/widget/CategoryCreationForm.dart';
 
 void main() => runApp(MyApp());
@@ -20,7 +21,8 @@ class MyApp extends StatelessWidget {
 
     title: 'Flutter Demo',
       theme: ThemeData(primarySwatch: Colors.blue),
-      home: MyHomePage(title: 'Flutter Demo Home Page'),
+      //home: MyHomePage(title: 'Flutter Demo Home Page'),
+        home: HomeScreen()
     ));
   }
 }
