@@ -22,7 +22,7 @@ class _CategoryFormDialogState extends State<CategoryFormDialog> {
   final label = TextEditingController();
 
   int categoryId;
-  List<String> parameters;
+  List<String> parameters ;
 
   @override
   void initState(){
@@ -67,31 +67,6 @@ class _CategoryFormDialogState extends State<CategoryFormDialog> {
                   return value.isEmpty ? 'must not be empty' : null;
                 },
               ),
-        ListView.builder(
-          itemCount: parameters.length,
-          itemBuilder: (context, index) {
-            return ListTile(
-              title: Text('${parameters[index]}'),
-            );
-          },
-        ),
-             /* Column(
-                children: <Widget>[
-                  RaisedButton(
-                    onPressed: getImageFromCamera,
-                    child: Text('camera'),
-                  ),
-                  RaisedButton(
-                    onPressed: () {
-                      getImageFromGallery(AFTER);
-                    },
-                    child: Text('gallery'),
-                  ),
-                  TextField(
-                    controller: afterImageUrl,
-                  )
-                ],
-              ),*/
 
 
               Padding(
