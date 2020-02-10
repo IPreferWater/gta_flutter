@@ -10,13 +10,6 @@ class HomeScreen extends StatefulWidget {
 
 class _HomeScreenState extends State<HomeScreen> {
   CategoryBloc _categoryBloc;
- // int _selectedMenu = 0;
-
-  /*void _selectAdminMenu(int choice) {
-    setState(() {
-      _selectedMenu = choice;
-    });
-  }*/
 
   @override
   void initState() {
@@ -32,34 +25,15 @@ class _HomeScreenState extends State<HomeScreen> {
       appBar: AppBar(
         title: Text('Creation app'),
         actions: <Widget>[
-         /* IconButton(
-            icon: Icon(Icons.description),
-            onPressed: () {
-              _selectAdminMenu(0);
-            },
-          ),*/
         ],
       ),
       body: _creationMenu(),
     );
   }
 
-  /*Widget _buildBody() {
-    if (_selectedMenu == 0){
-      return _creationMenu();
-    }
-
-    if (_selectedMenu == 1){
-      return _qrMenu();
-    }
-    return Text("please select menu");
-  }*/
-
-
   Widget _creationMenu() {
     return BlocBuilder(
       bloc: _categoryBloc,
-      // Whenever there is a new state emitted from the bloc, builder runs.
       builder: (BuildContext context, CategoryState state) {
         if (state is CategoryLoadingState) {
           return Center(
