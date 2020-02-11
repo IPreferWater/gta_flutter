@@ -21,8 +21,7 @@ class _CategoryFormDialogState extends State<CategoryFormDialog> {
   final _formKey = GlobalKey<FormState>();
   final label = TextEditingController();
 
-  int categoryId;
-  List<String> parameters ;
+  Category category;
 
   @override
   void initState(){
@@ -32,13 +31,11 @@ class _CategoryFormDialogState extends State<CategoryFormDialog> {
     _categoryBloc.add(LoadCategoriesEvent());
 
     if(this.widget.categoryToUpdate!=null){
-      final Category creationToUpdate = widget.categoryToUpdate;
-      categoryId = creationToUpdate.id;
-
-      label.text = creationToUpdate.label;
+      category = this.widget.categoryToUpdate;
+    }else{
+      category = new Category(label: "", parameters: []);
     }
   }
-
 
   @override
   Widget build(BuildContext context) {
@@ -68,7 +65,15 @@ class _CategoryFormDialogState extends State<CategoryFormDialog> {
                 },
               ),
 
+        ListView.builder(
+          shrinkWrap: true,
+          itemCount: category.parameters.length,
 
+          itemBuilder: (context, index) {
+            final item = category.parameters[index];
+              return Text(item);
+          },
+        ),
               Padding(
                   padding: const EdgeInsets.symmetric(vertical: 16.0),
                   child: RaisedButton(

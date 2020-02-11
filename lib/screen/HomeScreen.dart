@@ -16,7 +16,6 @@ class _HomeScreenState extends State<HomeScreen> {
     super.initState();
     _categoryBloc = BlocProvider.of<CategoryBloc>(context);
     _categoryBloc.add(LoadCategoriesEvent());
-
   }
 
   @override
@@ -52,7 +51,7 @@ class _HomeScreenState extends State<HomeScreen> {
                         title: Text(displayedCategory.id.toString()),
                         subtitle: Text(
                             'id : ${displayedCategory.id} label : ${displayedCategory.label}'),
-                        trailing: _buildUpdateDeleteQrCode(displayedCategory),
+                        trailing: _buildUpdateDeleteQrCode(displayedCategory)
                       );
                     },
                   ),
