@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:gta_flutter/bloc/category_bloc/bloc.dart';
 import 'package:gta_flutter/model/category.dart';
+import 'package:gta_flutter/widget/row_parameters.dart';
 
 class CategoryFormDialog extends StatefulWidget{
 
@@ -33,7 +34,7 @@ class _CategoryFormDialogState extends State<CategoryFormDialog> {
     if(this.widget.categoryToUpdate!=null){
       category = this.widget.categoryToUpdate;
     }else{
-      category = new Category(label: "", parameters: []);
+      category = new Category(label: "", parameters: ["aaa","bbb","ccc"]);
     }
   }
 
@@ -68,12 +69,38 @@ class _CategoryFormDialogState extends State<CategoryFormDialog> {
         ListView.builder(
           shrinkWrap: true,
           itemCount: category.parameters.length,
+          key: UniqueKey(),
 
           itemBuilder: (context, index) {
             final item = category.parameters[index];
-              return Text(item);
+              return Row(
+                mainAxisSize: MainAxisSize.min,
+                children: <Widget>[
+                  Text(item),
+                  IconButton(
+                    icon: Icon(Icons.edit),
+                    onPressed: () {
+
+                    },
+                  ),
+                  IconButton(
+                    icon: Icon(Icons.delete_outline),
+                    onPressed: () {
+                      category.parameters.removeAt(index);
+                      this.setState((){});
+                    },
+                  ),
+                ],
+              );
           },
         ),
+              FloatingActionButton(
+                child: Icon(Icons.add),
+                onPressed: () {
+                  category.parameters.add("add?");
+                  this.setState((){});
+                },
+              ),
               Padding(
                   padding: const EdgeInsets.symmetric(vertical: 16.0),
                   child: RaisedButton(
