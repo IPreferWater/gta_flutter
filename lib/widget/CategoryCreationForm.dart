@@ -21,6 +21,8 @@ class _CategoryFormDialogState extends State<CategoryFormDialog> {
 
   final _formKey = GlobalKey<FormState>();
   final label = TextEditingController();
+  List<TextEditingController> _controllers = new List();
+
 
   Category category;
 
@@ -72,11 +74,28 @@ class _CategoryFormDialogState extends State<CategoryFormDialog> {
           key: UniqueKey(),
 
           itemBuilder: (context, index) {
+
             final item = category.parameters[index];
+            TextEditingController _textEditController = new TextEditingController();
+            _textEditController.text = item;
+            _controllers.add(_textEditController);
               return Row(
                 mainAxisSize: MainAxisSize.min,
                 children: <Widget>[
-                  Text(item),
+                  Expanded(
+                    child: TextFormField(
+                      controller: _controllers[index],
+
+                      decoration: const InputDecoration(
+                        icon: Icon(Icons.person),
+                        hintText: 'Title of the after item',
+                        labelText: 'Title',
+                      ),
+                      validator: (String value) {
+                        return value.isEmpty ? 'must not be empty' : null;
+                      },
+                    ),
+                  ),
                   IconButton(
                     icon: Icon(Icons.edit),
                     onPressed: () {
