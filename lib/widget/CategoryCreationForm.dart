@@ -21,22 +21,27 @@ class _CategoryFormDialogState extends State<CategoryFormDialog> {
 
   final _formKey = GlobalKey<FormState>();
   final label = TextEditingController();
-  List<TextEditingController> _controllers = new List();
+  List<TextEditingController> _parameters = new List();
 
 
-  Category category;
+  //Category category;
 
   @override
   void initState(){
     super.initState();
 
     _categoryBloc = BlocProvider.of<CategoryBloc>(context);
-    _categoryBloc.add(LoadCategoriesEvent());
-
+    //_categoryBloc.add(LoadCategoriesEvent());
+    Category category;
     if(this.widget.categoryToUpdate!=null){
       category = this.widget.categoryToUpdate;
+      label.text = category.label;
+      category.parameters.forEach((parameter) {
+        _parameters.add( new TextEditingController(text: parameter));
+      });
+
     }else{
-      category = new Category(label: "", parameters: ["aaa","bbb","ccc"]);
+      //category = new Category(label: "", parameters: []);
     }
   }
 
@@ -48,7 +53,6 @@ class _CategoryFormDialogState extends State<CategoryFormDialog> {
         child: dialogContent(context),
       );
   }
-
 
   dialogContent(BuildContext context) {
     return Form(
@@ -70,21 +74,16 @@ class _CategoryFormDialogState extends State<CategoryFormDialog> {
 
         ListView.builder(
           shrinkWrap: true,
-          itemCount: category.parameters.length,
+          itemCount: _parameters.length,
           key: UniqueKey(),
 
           itemBuilder: (context, index) {
-
-            final item = category.parameters[index];
-            TextEditingController _textEditController = new TextEditingController();
-            _textEditController.text = item;
-            _controllers.add(_textEditController);
               return Row(
                 mainAxisSize: MainAxisSize.min,
                 children: <Widget>[
                   Expanded(
                     child: TextFormField(
-                      controller: _controllers[index],
+                      controller: _parameters[index],
 
                       decoration: const InputDecoration(
                         icon: Icon(Icons.person),
@@ -105,7 +104,7 @@ class _CategoryFormDialogState extends State<CategoryFormDialog> {
                   IconButton(
                     icon: Icon(Icons.delete_outline),
                     onPressed: () {
-                      category.parameters.removeAt(index);
+                      _parameters.removeAt(index);
                       this.setState((){});
                     },
                   ),
@@ -116,7 +115,7 @@ class _CategoryFormDialogState extends State<CategoryFormDialog> {
               FloatingActionButton(
                 child: Icon(Icons.add),
                 onPressed: () {
-                  category.parameters.add("add?");
+                  _parameters.add(new TextEditingController());
                   this.setState((){});
                 },
               ),
@@ -125,8 +124,10 @@ class _CategoryFormDialogState extends State<CategoryFormDialog> {
                   child: RaisedButton(
                     onPressed: () {
                       if (_formKey.currentState.validate()) {
+                        List<String> dd = _parameters.map((parameter) => parameter.text).toList();
                         final categoryValided = Category(
-                          label: label.text
+                          label: label.text,
+                          parameters : dd
                         );
 
                         //TODO: make this code correct
@@ -138,7 +139,7 @@ class _CategoryFormDialogState extends State<CategoryFormDialog> {
                         }
 
                         //in this form we put the state to load only free qrCode, we want to retrieve the other
-                        _categoryBloc.add(LoadCategoriesEvent());
+                       // _categoryBloc.add(LoadCategoriesEvent());
                         Navigator.of(context).pop();
                       }
                     },
