@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:gta_flutter/bloc/category_bloc/bloc.dart';
 import 'package:gta_flutter/model/category.dart';
-import 'package:gta_flutter/widget/row_parameters.dart';
 
 class CategoryFormDialog extends StatefulWidget{
 
@@ -24,24 +23,20 @@ class _CategoryFormDialogState extends State<CategoryFormDialog> {
   List<TextEditingController> _parameters = new List();
 
 
-  //Category category;
+  Category category;
 
   @override
   void initState(){
     super.initState();
 
     _categoryBloc = BlocProvider.of<CategoryBloc>(context);
-    //_categoryBloc.add(LoadCategoriesEvent());
-    Category category;
+
     if(this.widget.categoryToUpdate!=null){
       category = this.widget.categoryToUpdate;
       label.text = category.label;
       category.parameters.forEach((parameter) {
         _parameters.add( new TextEditingController(text: parameter));
       });
-
-    }else{
-      //category = new Category(label: "", parameters: []);
     }
   }
 
@@ -124,22 +119,20 @@ class _CategoryFormDialogState extends State<CategoryFormDialog> {
                   child: RaisedButton(
                     onPressed: () {
                       if (_formKey.currentState.validate()) {
-                        List<String> dd = _parameters.map((parameter) => parameter.text).toList();
-                        final categoryValided = Category(
+                        List<String> listParameters = _parameters.map((parameter) => parameter.text).toList();
+                        final categoryValidated = Category(
                           label: label.text,
-                          parameters : dd
+                          parameters : listParameters
                         );
 
                         //TODO: make this code correct
                         if(widget.categoryToUpdate!=null){
-                          categoryValided.id = widget.categoryToUpdate.id;
-                          _categoryBloc.add(UpdateCategoryEvent(categoryValided));
+                          categoryValidated.id = widget.categoryToUpdate.id;
+                          _categoryBloc.add(UpdateCategoryEvent(categoryValidated));
                         }else{
-                          _categoryBloc.add(CreateCategoryEvent(categoryValided));
+                          _categoryBloc.add(CreateCategoryEvent(categoryValidated));
                         }
 
-                        //in this form we put the state to load only free qrCode, we want to retrieve the other
-                       // _categoryBloc.add(LoadCategoriesEvent());
                         Navigator.of(context).pop();
                       }
                     },
