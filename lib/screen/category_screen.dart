@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:gta_flutter/bloc/category_bloc/bloc.dart';
+import 'package:gta_flutter/bloc/sub_category_bloc/bloc.dart';
 import 'package:gta_flutter/model/category.dart';
 
 class CategoryScreen extends StatefulWidget{
@@ -16,18 +16,17 @@ class CategoryScreen extends StatefulWidget{
 }
 class _CategoryScreenState extends State<CategoryScreen> {
 
-  CategoryBloc _categoryBloc;
+  SubCategoryBloc _subCategoryBloc;
 
   final _formKey = GlobalKey<FormState>();
   final label = TextEditingController();
-  List<TextEditingController> _parameters = new List();
 
-
-  Category category;
 
   @override
   void initState(){
     super.initState();
+    _subCategoryBloc = BlocProvider.of<SubCategoryBloc>(context);
+    _subCategoryBloc.add(LoadSubCategoriesEvent());
 
    /* _categoryBloc = BlocProvider.of<CategoryBloc>(context);
 
@@ -43,13 +42,36 @@ class _CategoryScreenState extends State<CategoryScreen> {
   @override
   Widget build(BuildContext context) {
     return
-      Dialog(
-        elevation: 0.0,
-        child: dialogContent(context),
+      Scaffold(
+        appBar: AppBar(
+          title: Text('Creation app'),
+          actions: <Widget>[
+          ],
+        ),
+        body: _creationMenu(),
       );
   }
 
-  dialogContent(BuildContext context) {
-    return Text("bjr");
+  Widget _creationMenu() {
+    return BlocBuilder(
+      bloc: _subCategoryBloc,
+      builder: (BuildContext context, SubCategoryState state){
+        if (state is SubCategoryLoadingState){
+          return Center(
+            child: CircularProgressIndicator(),
+          );
+        } else if (state is SubCategoriesLoadingSuccessState){
+          Text("okkk");
+        }
+
+        return Center(
+            child: Text(
+              "error ?",
+              textAlign: TextAlign.center,
+            ));
+      },
+    );
   }
+
+
 }
