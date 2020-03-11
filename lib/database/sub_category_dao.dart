@@ -10,8 +10,8 @@ class SubCategoryDao {
 
   Future<Database> get _db async => await AppDatabase.instance.database;
 
-  Future insert(SubCategory category) async {
-    await _subCategoryStore.add(await _db, category.toMap());
+  Future insert(SubCategory subCategory) async {
+    await _subCategoryStore.add(await _db, subCategory.toMap());
   }
 
   Future update(SubCategory subCategory) async {
@@ -37,6 +37,7 @@ class SubCategoryDao {
       await _db,
     );
 
+    print(recordSnapshots);
     return recordSnapshots.map((snapshot) {
       final subCategory = SubCategory.fromMap(snapshot.value);
       subCategory.id = snapshot.key;

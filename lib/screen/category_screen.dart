@@ -61,7 +61,7 @@ class _CategoryScreenState extends State<CategoryScreen> {
             child: CircularProgressIndicator(),
           );
         } else if (state is SubCategoriesLoadingSuccessState){
-          Text("okkk");
+          return Text("okkk");
         }
 
         return Center(
