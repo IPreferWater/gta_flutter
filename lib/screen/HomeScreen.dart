@@ -4,6 +4,8 @@ import 'package:gta_flutter/bloc/category_bloc/bloc.dart';
 import 'package:gta_flutter/model/category.dart';
 import 'package:gta_flutter/widget/CategoryCreationForm.dart';
 
+import 'category_screen.dart';
+
 class HomeScreen extends StatefulWidget {
   _HomeScreenState createState() => _HomeScreenState();
 }
@@ -51,7 +53,12 @@ class _HomeScreenState extends State<HomeScreen> {
                         title: Text(displayedCategory.id.toString()),
                         subtitle: Text(
                             'id : ${displayedCategory.id} label : ${displayedCategory.label}'),
-                        trailing: _buildUpdateDeleteQrCode(displayedCategory)
+                        trailing: _buildUpdateDeleteQrCode(displayedCategory),
+                        onTap: () {
+                          Navigator.push(context,
+                              MaterialPageRoute(builder: (context) => CategoryScreen())
+                          );
+                        },
                       );
                     },
                   ),
