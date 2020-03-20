@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:gta_flutter/bloc/category_bloc/bloc.dart';
 import 'package:gta_flutter/bloc/sub_category_bloc/bloc.dart';
-import 'package:gta_flutter/screen/HomeScreen.dart';
+import 'package:gta_flutter/screen/category_screen.dart';
 
 void main() => runApp(MyApp());
 

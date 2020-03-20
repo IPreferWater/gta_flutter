@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:gta_flutter/bloc/category_bloc/bloc.dart';
 import 'package:gta_flutter/model/category.dart';
-import 'package:gta_flutter/widget/CategoryCreationForm.dart';
+import 'package:gta_flutter/widget/category_creation_form.dart';
 import 'package:gta_flutter/widget/add_button.dart';
 
 import 'sub_category_screen.dart';
