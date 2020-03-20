@@ -21,7 +21,6 @@ class _SubCategoryScreenState extends State<SubCategoryScreen> {
 
   SubCategoryBloc _subCategoryBloc;
 
-  final _formKey = GlobalKey<FormState>();
   final label = TextEditingController();
 
 
@@ -31,16 +30,6 @@ class _SubCategoryScreenState extends State<SubCategoryScreen> {
     _subCategoryBloc = BlocProvider.of<SubCategoryBloc>(context);
     _subCategoryBloc.category = widget.category;
     _subCategoryBloc.add(LoadSubCategoriesEvent());
-
-   /* _categoryBloc = BlocProvider.of<CategoryBloc>(context);
-
-    if(this.widget.categoryToUpdate!=null){
-      category = this.widget.categoryToUpdate;
-      label.text = category.label;
-      category.parameters.forEach((parameter) {
-        _parameters.add( new TextEditingController(text: parameter));
-      });
-    }*/
   }
 
   @override
@@ -127,6 +116,4 @@ class _SubCategoryScreenState extends State<SubCategoryScreen> {
       ],
     );
   }
-
-
 }
