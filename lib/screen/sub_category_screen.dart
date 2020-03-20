@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:gta_flutter/bloc/sub_category_bloc/bloc.dart';
 import 'package:gta_flutter/model/category.dart';
+import 'package:gta_flutter/model/sub_category.dart';
 import 'package:gta_flutter/widget/add_button.dart';
 import 'package:gta_flutter/widget/sub_category_creation_form.dart';
 
@@ -76,7 +77,7 @@ class _SubCategoryScreenState extends State<SubCategoryScreen> {
                         title: Text(displayedSubCategory.id.toString()),
                         subtitle: Text(
                             'id : ${displayedSubCategory.id} label : ${displayedSubCategory.label}'),
-                       // trailing: _buildUpdateDeleteQrCode(displayedSubCategory),
+                        trailing: _buildUpdateDeleteSubCategory(displayedSubCategory),
                         onTap: () {
                          /* Navigator.push(context,
                               MaterialPageRoute(builder: (context) => SubCategoryScreen())
@@ -101,7 +102,7 @@ class _SubCategoryScreenState extends State<SubCategoryScreen> {
     );
   }
 
-  /*Row _buildUpdateDeleteQrCode(SubCategory categoryDisplayed){
+  Row _buildUpdateDeleteSubCategory(SubCategory subCategory){
     return Row(
       mainAxisSize: MainAxisSize.min,
       children: <Widget>[
@@ -110,8 +111,9 @@ class _SubCategoryScreenState extends State<SubCategoryScreen> {
           onPressed: () {
             showDialog(
               context: context,
-              builder: (BuildContext context) => CategoryFormDialog(
-                categoryToUpdate: categoryDisplayed,
+              builder: (BuildContext context) => SubCategoryFormDialog(
+                subCategoryToUpdate: subCategory,
+                category: widget.category,
               ),
             );
           },
@@ -119,12 +121,12 @@ class _SubCategoryScreenState extends State<SubCategoryScreen> {
         IconButton(
           icon: Icon(Icons.delete_outline),
           onPressed: () {
-            _categoryBloc.add(DeleteCategoryEvent(categoryDisplayed));
+            _subCategoryBloc.add(DeleteSubCategoryEvent(subCategory));
           },
         ),
       ],
     );
-  }*/
+  }
 
 
 }
