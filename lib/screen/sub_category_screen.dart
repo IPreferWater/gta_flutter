@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:gta_flutter/bloc/sub_category_bloc/bloc.dart';
 import 'package:gta_flutter/model/category.dart';
-import 'package:gta_flutter/model/sub_category.dart';
 import 'package:gta_flutter/widget/add_button.dart';
 import 'package:gta_flutter/widget/sub_category_creation_form.dart';
 
@@ -11,7 +10,7 @@ class SubCategoryScreen extends StatefulWidget{
   final Category category;
 
   SubCategoryScreen({
-    this.category
+    @required this.category
   });
 
   _SubCategoryScreenState createState() => _SubCategoryScreenState();
@@ -29,7 +28,7 @@ class _SubCategoryScreenState extends State<SubCategoryScreen> {
   void initState(){
     super.initState();
     _subCategoryBloc = BlocProvider.of<SubCategoryBloc>(context);
-    _subCategoryBloc.add(LoadSubCategoriesEvent());
+    _subCategoryBloc.add(LoadSubCategoriesFromCategoryEvent(widget.category));
 
    /* _categoryBloc = BlocProvider.of<CategoryBloc>(context);
 
@@ -86,7 +85,7 @@ class _SubCategoryScreenState extends State<SubCategoryScreen> {
                     },
                   ),
                   AddButton(
-                      formDialog: SubCategoryFormDialog()
+                      formDialog: SubCategoryFormDialog(category: widget.category)
                   ),
                 ]
             );

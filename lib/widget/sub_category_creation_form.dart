@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:gta_flutter/bloc/category_bloc/bloc.dart';
 import 'package:gta_flutter/bloc/sub_category_bloc/bloc.dart';
 import 'package:gta_flutter/model/category.dart';
 import 'package:gta_flutter/model/sub_category.dart';
@@ -8,9 +7,11 @@ import 'package:gta_flutter/model/sub_category.dart';
 class SubCategoryFormDialog extends StatefulWidget{
 
   final SubCategory subCategoryToUpdate;
+  final Category category;
 
   SubCategoryFormDialog({
-    this.subCategoryToUpdate
+    @required this.category,
+    this.subCategoryToUpdate,
   });
 
   _SubCategoryFormDialogState createState() => _SubCategoryFormDialogState();
@@ -19,11 +20,8 @@ class SubCategoryFormDialog extends StatefulWidget{
 class _SubCategoryFormDialogState extends State<SubCategoryFormDialog> {
 
   SubCategoryBloc _subCategoryBloc;
-
   final _formKey = GlobalKey<FormState>();
   final label = TextEditingController();
-
-  SubCategory subCategory;
 
   @override
   void initState(){
@@ -32,8 +30,8 @@ class _SubCategoryFormDialogState extends State<SubCategoryFormDialog> {
     _subCategoryBloc = BlocProvider.of<SubCategoryBloc>(context);
 
     if(this.widget.subCategoryToUpdate!=null){
-      subCategory = this.widget.subCategoryToUpdate;
-      label.text = subCategory.label;
+      label.text =this.widget.subCategoryToUpdate.label;
+
     }
   }
 
@@ -69,10 +67,11 @@ class _SubCategoryFormDialogState extends State<SubCategoryFormDialog> {
                     onPressed: () {
                       if (_formKey.currentState.validate()) {
 
-                        final subCategoryValidated = SubCategory(label: label.text, categoryId: 1);
+                        final subCategoryValidated = SubCategory(label: label.text, categoryId: widget.category.id);
                         if(widget.subCategoryToUpdate!=null){
 
                           subCategoryValidated.id = widget.subCategoryToUpdate.id;
+                          subCategoryValidated.categoryId = widget.category.id;
                           _subCategoryBloc.add(UpdateSubCategoryEvent(subCategoryValidated));
                         }else{
                           _subCategoryBloc.add(CreateSubCategoryEvent(subCategoryValidated));

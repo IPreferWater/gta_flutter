@@ -44,4 +44,20 @@ class SubCategoryDao {
       return subCategory;
     }).toList();
   }
+
+  Future<List<SubCategory>> getAllFromCategory(int categoryId) async {
+    final finder = Finder(filter: Filter.equals('categoryId', categoryId));
+
+    final recordSnapshots = await _subCategoryStore.find(
+      await _db,
+      finder: finder
+    );
+
+    print(recordSnapshots);
+    return recordSnapshots.map((snapshot) {
+      final subCategory = SubCategory.fromMap(snapshot.value);
+      subCategory.id = snapshot.key;
+      return subCategory;
+    }).toList();
+  }
 }

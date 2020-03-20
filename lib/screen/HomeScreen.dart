@@ -57,7 +57,7 @@ class _HomeScreenState extends State<HomeScreen> {
                         trailing: _buildUpdateDeleteQrCode(displayedCategory),
                         onTap: () {
                           Navigator.push(context,
-                              MaterialPageRoute(builder: (context) => SubCategoryScreen())
+                              MaterialPageRoute(builder: (context) => SubCategoryScreen(category: displayedCategory,))
                           );
                         },
                       );

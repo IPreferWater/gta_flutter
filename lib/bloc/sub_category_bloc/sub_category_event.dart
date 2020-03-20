@@ -1,3 +1,4 @@
+import 'package:gta_flutter/model/category.dart';
 import 'package:gta_flutter/model/sub_category.dart';
 import 'package:equatable/equatable.dart';
 import 'package:meta/meta.dart';
@@ -8,6 +9,11 @@ abstract class SubCategoryEvent extends Equatable {
 }
 
 class LoadSubCategoriesEvent extends SubCategoryEvent {}
+
+class LoadSubCategoriesFromCategoryEvent extends SubCategoryEvent {
+  final Category category;
+  LoadSubCategoriesFromCategoryEvent(this.category) : super ([category]);
+}
 
 class CreateSubCategoryEvent extends SubCategoryEvent{
   final SubCategory subCategory;
