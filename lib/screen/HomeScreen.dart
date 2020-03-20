@@ -5,7 +5,7 @@ import 'package:gta_flutter/model/category.dart';
 import 'package:gta_flutter/widget/CategoryCreationForm.dart';
 import 'package:gta_flutter/widget/add_button.dart';
 
-import 'category_screen.dart';
+import 'sub_category_screen.dart';
 
 class HomeScreen extends StatefulWidget {
   _HomeScreenState createState() => _HomeScreenState();
@@ -57,7 +57,7 @@ class _HomeScreenState extends State<HomeScreen> {
                         trailing: _buildUpdateDeleteQrCode(displayedCategory),
                         onTap: () {
                           Navigator.push(context,
-                              MaterialPageRoute(builder: (context) => CategoryScreen())
+                              MaterialPageRoute(builder: (context) => SubCategoryScreen())
                           );
                         },
                       );
