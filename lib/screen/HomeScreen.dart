@@ -3,6 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:gta_flutter/bloc/category_bloc/bloc.dart';
 import 'package:gta_flutter/model/category.dart';
 import 'package:gta_flutter/widget/CategoryCreationForm.dart';
+import 'package:gta_flutter/widget/add_button.dart';
 
 import 'category_screen.dart';
 
@@ -62,15 +63,9 @@ class _HomeScreenState extends State<HomeScreen> {
                       );
                     },
                   ),
-                  FloatingActionButton(
-                    child: Icon(Icons.add),
-                    onPressed: () {
-                      showDialog(
-                        context: context,
-                        builder: (BuildContext context) => CategoryFormDialog(),
-                      );
-                    },
-                  )
+                  AddButton(
+                    formDialog: CategoryFormDialog()
+                  ),
                 ]
             );
         }
