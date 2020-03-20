@@ -28,7 +28,8 @@ class _SubCategoryScreenState extends State<SubCategoryScreen> {
   void initState(){
     super.initState();
     _subCategoryBloc = BlocProvider.of<SubCategoryBloc>(context);
-    _subCategoryBloc.add(LoadSubCategoriesFromCategoryEvent(widget.category));
+    _subCategoryBloc.category = widget.category;
+    _subCategoryBloc.add(LoadSubCategoriesEvent());
 
    /* _categoryBloc = BlocProvider.of<CategoryBloc>(context);
 

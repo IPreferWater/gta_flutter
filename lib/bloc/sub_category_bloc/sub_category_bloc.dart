@@ -4,9 +4,11 @@ import 'package:gta_flutter/database/sub_category_dao.dart';
 import 'package:gta_flutter/model/category.dart';
 import 'sub_category_event.dart';
 import 'sub_category_state.dart';
+
 class SubCategoryBloc extends Bloc<SubCategoryEvent, SubCategoryState> {
 
   SubCategoryDao _subCategoryDao = SubCategoryDao();
+  Category category;
 
   @override
   SubCategoryState get initialState => SubCategoryLoadingState();
@@ -21,7 +23,7 @@ class SubCategoryBloc extends Bloc<SubCategoryEvent, SubCategoryState> {
 
     else if (event is LoadSubCategoriesFromCategoryEvent){
       yield SubCategoryLoadingState();
-      yield* _reloadSubCategoriesFromCategory(event.category);
+      yield* _reloadCategories();
     }
 
     else if (event is CreateSubCategoryEvent){
@@ -41,7 +43,7 @@ class SubCategoryBloc extends Bloc<SubCategoryEvent, SubCategoryState> {
   }
 
   Stream<SubCategoryState> _reloadCategories() async* {
-    final subCategories = await _subCategoryDao.getAll();
+    final subCategories = await _subCategoryDao.getAllFromCategory(category.id);
     print(subCategories);
     yield SubCategoriesLoadingSuccessState(subCategories);
   }

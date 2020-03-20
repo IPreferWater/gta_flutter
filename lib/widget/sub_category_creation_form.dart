@@ -28,6 +28,7 @@ class _SubCategoryFormDialogState extends State<SubCategoryFormDialog> {
     super.initState();
 
     _subCategoryBloc = BlocProvider.of<SubCategoryBloc>(context);
+    _subCategoryBloc.category = widget.category;
 
     if(this.widget.subCategoryToUpdate!=null){
       label.text =this.widget.subCategoryToUpdate.label;
