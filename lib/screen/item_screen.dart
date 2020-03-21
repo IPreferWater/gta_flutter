@@ -4,6 +4,7 @@ import 'package:gta_flutter/bloc/sub_category_bloc/bloc.dart';
 import 'package:gta_flutter/model/category.dart';
 import 'package:gta_flutter/model/sub_category.dart';
 import 'package:gta_flutter/widget/add_button.dart';
+import 'package:gta_flutter/widget/carousel_slider.dart';
 import 'package:gta_flutter/widget/sub_category_creation_form.dart';
 
 class ItemScreen extends StatefulWidget{
@@ -59,6 +60,17 @@ class _ItemScreenState extends State<ItemScreen> {
           return
             Column(
                 children: <Widget>[
+                  CarouselSlider(
+                    items: <Widget>[
+                      Text("aaaaaa"),
+                      Text("bbbbbb"),
+                      Text("cccccc"),
+                    ],
+                    autoPlay: false,
+                    enlargeCenterPage: true,
+                    viewportFraction: 0.9,
+                    aspectRatio: 2.0,
+                  ),
                   /*ListView.builder(
                     shrinkWrap: true,
                     itemCount: widget.subCategory.items.length,
