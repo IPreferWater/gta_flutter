@@ -71,16 +71,12 @@ class _SubCategoryFormDialogState extends State<SubCategoryFormDialog> {
 
                         final subCategoryValidated = SubCategory(label: label.text, categoryId: widget.category.id);
                         if(widget.subCategoryToUpdate!=null){
-
                           subCategoryValidated.id = widget.subCategoryToUpdate.id;
-                          subCategoryValidated.categoryId = widget.category.id;
+                          //subCategoryValidated.categoryId = widget.category.id;
                           subCategoryValidated.items = widget.subCategoryToUpdate.items;
 
                           _subCategoryBloc.add(UpdateSubCategoryEvent(subCategoryValidated));
                         }else{
-                         var item = Item(label: "mock", parameters: null);
-                         subCategoryValidated.items =  new List.filled(1, item);
-
                           _subCategoryBloc.add(CreateSubCategoryEvent(subCategoryValidated));
                         }
 

@@ -31,6 +31,6 @@ class SubCategory {
 
   @override
   String toString() {
-    return 'Category{ label : $label, categoryId: $categoryId}';
+    return 'Category{ label : $label, categoryId: $categoryId items: $items}';
   }
 }

@@ -3,34 +3,34 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:gta_flutter/bloc/sub_category_bloc/bloc.dart';
 import 'package:gta_flutter/model/category.dart';
 import 'package:gta_flutter/model/sub_category.dart';
-import 'package:gta_flutter/screen/item_screen.dart';
 import 'package:gta_flutter/widget/add_button.dart';
 import 'package:gta_flutter/widget/sub_category_creation_form.dart';
 
-class SubCategoryScreen extends StatefulWidget{
+class ItemScreen extends StatefulWidget{
 
   final Category category;
+  final SubCategory subCategory;
+  final SubCategoryBloc subCategoryBloc;
 
-  SubCategoryScreen({
-    @required this.category
+  ItemScreen({
+    @required this.category,
+    @required this.subCategory,
+    @required this.subCategoryBloc
   });
 
-  _SubCategoryScreenState createState() => _SubCategoryScreenState();
+  _ItemScreenState createState() => _ItemScreenState();
 
 }
-class _SubCategoryScreenState extends State<SubCategoryScreen> {
+class _ItemScreenState extends State<ItemScreen> {
 
-  SubCategoryBloc _subCategoryBloc;
 
-  final label = TextEditingController();
+
 
 
   @override
   void initState(){
     super.initState();
-    _subCategoryBloc = BlocProvider.of<SubCategoryBloc>(context);
-    _subCategoryBloc.category = widget.category;
-    _subCategoryBloc.add(LoadSubCategoriesEvent());
+
   }
 
   @override
@@ -38,7 +38,7 @@ class _SubCategoryScreenState extends State<SubCategoryScreen> {
     return
       Scaffold(
         appBar: AppBar(
-          title: Text('Sub Categories'),
+          title: Text('Items'),
           actions: <Widget>[
           ],
         ),
@@ -48,37 +48,35 @@ class _SubCategoryScreenState extends State<SubCategoryScreen> {
 
   Widget _creationMenu() {
     return BlocBuilder(
-      bloc: _subCategoryBloc,
+      bloc: widget.subCategoryBloc,
       builder: (BuildContext context, SubCategoryState state){
         if (state is SubCategoryLoadingState){
           return Center(
             child: CircularProgressIndicator(),
           );
         } else if (state is SubCategoriesLoadingSuccessState){
+          print(widget.subCategory);
           return
             Column(
                 children: <Widget>[
-                  ListView.builder(
+                  /*ListView.builder(
                     shrinkWrap: true,
-                    itemCount: state.subCategories.length,
+                    itemCount: widget.subCategory.items.length,
                     itemBuilder: (context, index) {
-                      final displayedSubCategory = state.subCategories[index];
+                      final displayedItem = widget.subCategory.items[index];
                       return ListTile(
-                        title: Text(displayedSubCategory.id.toString()),
+                        title: Text(displayedItem.label),
                         subtitle: Text(
-                            'id : ${displayedSubCategory.id} label : ${displayedSubCategory.label}'),
-                        trailing: _buildUpdateDeleteSubCategory(displayedSubCategory),
+                            'label : ${displayedItem.label} parameters : ${displayedItem.parameters}'),
+                        //trailing: _buildUpdateDeleteSubCategory(displayedSubCategory),
                         onTap: () {
-                          Navigator.push(context,
-                              MaterialPageRoute(builder: (context) => ItemScreen(
-                                category: widget.category,
-                                subCategory: displayedSubCategory,
-                                subCategoryBloc: _subCategoryBloc,))
-                          );
+                         /* Navigator.push(context,
+                              MaterialPageRoute(builder: (context) => SubCategoryScreen())
+                          );*/
                         },
                       );
                     },
-                  ),
+                  ),*/
                   AddButton(
                       formDialog: SubCategoryFormDialog(category: widget.category)
                   ),
@@ -95,7 +93,7 @@ class _SubCategoryScreenState extends State<SubCategoryScreen> {
     );
   }
 
-  Row _buildUpdateDeleteSubCategory(SubCategory subCategory){
+  /*Row _buildUpdateDeleteSubCategory(SubCategory subCategory){
     return Row(
       mainAxisSize: MainAxisSize.min,
       children: <Widget>[
@@ -119,5 +117,5 @@ class _SubCategoryScreenState extends State<SubCategoryScreen> {
         ),
       ],
     );
-  }
+  }*/
 }
