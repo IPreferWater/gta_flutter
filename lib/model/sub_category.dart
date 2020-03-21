@@ -1,3 +1,4 @@
+import 'package:gta_flutter/model/item.dart';
 import 'package:meta/meta.dart';
 
 class SubCategory {
@@ -5,22 +6,27 @@ class SubCategory {
   int id;
   int categoryId;
   String label;
+  List<Item> items;
 
   SubCategory({
     @required this.label,
-    @required this.categoryId});
+    @required this.categoryId,
+    this.items });
 
-  // columns in the database.
   Map<String, dynamic> toMap() {
     return {
       'label' : label,
-      'categoryId': categoryId
+      'categoryId': categoryId,
+      'items': items.map((item) => item.toMap())
     };
   }
 
   static SubCategory fromMap(Map<String, dynamic> map) {
 
-    return SubCategory(label: map['label'], categoryId: map['categoryId']);
+    return SubCategory(
+        label: map['label'],
+        categoryId: map['categoryId'],
+        items: map['items'].cast<Item>());
   }
 
   @override

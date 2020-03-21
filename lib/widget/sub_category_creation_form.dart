@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:gta_flutter/bloc/sub_category_bloc/bloc.dart';
 import 'package:gta_flutter/model/category.dart';
+import 'package:gta_flutter/model/item.dart';
 import 'package:gta_flutter/model/sub_category.dart';
 
 class SubCategoryFormDialog extends StatefulWidget{
@@ -73,8 +74,13 @@ class _SubCategoryFormDialogState extends State<SubCategoryFormDialog> {
 
                           subCategoryValidated.id = widget.subCategoryToUpdate.id;
                           subCategoryValidated.categoryId = widget.category.id;
+                          subCategoryValidated.items = widget.subCategoryToUpdate.items;
+
                           _subCategoryBloc.add(UpdateSubCategoryEvent(subCategoryValidated));
                         }else{
+                         var item = Item(label: "mock", parameters: null);
+                         subCategoryValidated.items =  new List.filled(1, item);
+
                           _subCategoryBloc.add(CreateSubCategoryEvent(subCategoryValidated));
                         }
 

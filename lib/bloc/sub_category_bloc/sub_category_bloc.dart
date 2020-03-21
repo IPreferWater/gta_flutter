@@ -47,10 +47,4 @@ class SubCategoryBloc extends Bloc<SubCategoryEvent, SubCategoryState> {
     print(subCategories);
     yield SubCategoriesLoadingSuccessState(subCategories);
   }
-
-  Stream<SubCategoryState> _reloadSubCategoriesFromCategory(Category category) async* {
-    final subCategories = await _subCategoryDao.getAllFromCategory(category.id);
-    print(subCategories);
-    yield SubCategoriesLoadingSuccessState(subCategories);
-  }
 }

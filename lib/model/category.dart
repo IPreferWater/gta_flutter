@@ -19,7 +19,6 @@ class Category {
   }
 
   static Category fromMap(Map<String, dynamic> map) {
-
     return Category(label: map['label'], parameters: map['parameters'].cast<String>());
   }
 
