@@ -6,12 +6,12 @@ class SubCategory {
   int id;
   int categoryId;
   String label;
-  List<Item> items;
+  List<Item> items = <Item>[];
 
   SubCategory({
     @required this.label,
     @required this.categoryId,
-    this.items });
+    this.items }) { items ??= <Item>[];}
 
   Map<String, dynamic> toMap() {
     return {

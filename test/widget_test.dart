@@ -9,6 +9,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 
 import 'package:gta_flutter/main.dart';
+import 'package:gta_flutter/model/item.dart';
+import 'package:gta_flutter/model/sub_category.dart';
 
 void main() {
   testWidgets('Counter increments smoke test', (WidgetTester tester) async {
@@ -26,5 +28,17 @@ void main() {
     // Verify that our counter has incremented.
     expect(find.text('0'), findsNothing);
     expect(find.text('1'), findsOneWidget);
+  });
+
+  testWidgets('SubCategory item should have a default value', (WidgetTester tester) async {
+    var subCategoryNullItems = SubCategory(label: "label", categoryId: 1);
+    expect(subCategoryNullItems.items, <Item>[] );
+
+    Item item = Item(label: "mockLabel", parameters: null);
+    List<Item> listItem = [item];
+
+    var subCategoryWithItems = SubCategory(label: "label", categoryId: 1, items: listItem);
+    expect(subCategoryWithItems.items, listItem );
+
   });
 }
