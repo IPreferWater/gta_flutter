@@ -24,6 +24,6 @@ class Category {
 
   @override
   String toString() {
-    return 'Category{ label : $label, parameters: $parameters}';
+    return 'Category{ id : $id, label : $label, parameters: $parameters}';
   }
 }

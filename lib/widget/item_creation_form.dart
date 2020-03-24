@@ -134,7 +134,7 @@ class _ItemFormDialogState extends State<ItemFormDialog> {
                           _subCategoryBloc.add(UpdateSubCategoryEvent(sb));
                         }
 
-                        _subCategoryBloc.close();
+                        //_subCategoryBloc.close();
                         Navigator.of(context).pop();
                       }
                     },

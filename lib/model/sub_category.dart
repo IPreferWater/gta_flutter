@@ -32,7 +32,11 @@ class SubCategory {
 
   @override
   String toString() {
-    return 'Category{ label : $label, categoryId: $categoryId items: $items}';
+    return 'SubCategory{ \n'
+        'id : $id,\n'
+        ' label : $label,\n'
+        ' categoryId: $categoryId,\n,'
+        ' items: $items}\n';
   }
 
    addItem(Item item){

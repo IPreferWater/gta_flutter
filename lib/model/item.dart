@@ -29,6 +29,7 @@ class Item {
 
   @override
   String toString() {
-    return 'Item{ label : $label, parameters : $parameters }';
+    return 'Item{ label : $label,\n'
+        'parameters : $parameters\n }';
   }
 }

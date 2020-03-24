@@ -25,6 +25,8 @@ class Parameter {
 
   @override
   String toString() {
-    return 'Parameter{ key : $key, value : $value }';
+    return 'Parameter{ \n'
+        'key : $key,\n'
+        'value : $value }';
   }
 }
