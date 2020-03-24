@@ -72,8 +72,7 @@ class _SubCategoryScreenState extends State<SubCategoryScreen> {
                           Navigator.push(context,
                               MaterialPageRoute(builder: (context) => ItemScreen(
                                 category: widget.category,
-                                subCategory: displayedSubCategory,
-                                subCategoryBloc: _subCategoryBloc,))
+                                subCategory: displayedSubCategory))
                           );
                         },
                       );
