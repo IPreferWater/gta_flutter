@@ -5,6 +5,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:gta_flutter/bloc/sub_category_bloc/bloc.dart';
 import 'package:gta_flutter/model/category.dart';
 import 'package:gta_flutter/model/item.dart';
+import 'package:gta_flutter/model/parameter.dart';
 import 'package:gta_flutter/model/sub_category.dart';
 import 'package:sembast/utils/value_utils.dart';
 
@@ -105,25 +106,26 @@ class _ItemFormDialogState extends State<ItemFormDialog> {
                     onPressed: () {
                       if (_formKey.currentState.validate()) {
 
-                        LinkedHashMap hashMapProperties = new LinkedHashMap<String, String>();
+                        //LinkedHashMap hashMapProperties = new LinkedHashMap<String, String>();
+                        List<Parameter> listParameters = List();
 
                         for (var i = 0; i < _parameters.length; i++) {
                           String parameterValue = _parameters[i].controller.text;
-                          String parameterLabel =  widget.category.parameters[i];
-                          hashMapProperties[parameterLabel]=parameterValue;
+                          String parameterKey =  widget.category.parameters[i];
+                          Parameter newParameter = new Parameter(key: parameterKey, value: parameterValue);
+                          listParameters.add(newParameter);
                         }
 
                         var subCategoryToUpdate = widget.subCategory;
 
                         Item itemValidated = new Item(
                           label: label.text,
-                          parameters: hashMapProperties
+                          parameters: listParameters
                         );
 
                         if(widget.itemToUpdate!=null){
                           //_subCategoryBloc.add(UpdateSubCategoryEvent(subCategoryValidated));
                         }else{
-                          //TODO: id = null & listParam = null
                           //subCategoryToUpdate.items.add(itemValidated);
                           var s = cloneMap(subCategoryToUpdate.toMap());
                           SubCategory sb = SubCategory.fromMap(s);
