@@ -1,0 +1,145 @@
+import 'dart:collection';
+
+import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:gta_flutter/bloc/sub_category_bloc/bloc.dart';
+import 'package:gta_flutter/model/category.dart';
+import 'package:gta_flutter/model/item.dart';
+import 'package:gta_flutter/model/sub_category.dart';
+import 'package:sembast/utils/value_utils.dart';
+
+class ItemFormDialog extends StatefulWidget{
+
+   SubCategory subCategory;
+  final Category category;
+  final Item itemToUpdate;
+
+  ItemFormDialog({
+    @required this.category,
+    @required this.subCategory,
+    this.itemToUpdate
+  });
+
+  _ItemFormDialogState createState() => _ItemFormDialogState();
+
+}
+class _ItemFormDialogState extends State<ItemFormDialog> {
+
+  SubCategoryBloc _subCategoryBloc;
+  final _formKey = GlobalKey<FormState>();
+  final label = TextEditingController();
+  List<TextFormField> _parameters = new List();
+
+  @override
+  void initState(){
+    super.initState();
+
+    _subCategoryBloc = BlocProvider.of<SubCategoryBloc>(context);
+    _subCategoryBloc.category = widget.category;
+
+    widget.category.parameters.forEach((parameter) => _parameters.add(
+
+      new TextFormField(
+      controller: new TextEditingController(),
+      decoration: InputDecoration(
+        icon: Icon(Icons.person),
+        hintText: 'Title of the after item',
+        labelText: parameter,
+      ),
+      validator: (String value) {
+        return value.isEmpty ? 'must not be empty' : null;
+      }
+    )
+      ));
+
+    if(this.widget.itemToUpdate!=null){
+      //label.text =this.widget.subCategoryToUpdate.label;
+    }
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return
+      Dialog(
+        elevation: 0.0,
+        child: dialogContent(context),
+      );
+  }
+
+  dialogContent(BuildContext context) {
+
+    return Form(
+        key: _formKey,
+        child: ListView(
+            padding: const EdgeInsets.all(8),
+            children: <Widget>[
+              TextFormField(
+                controller: label,
+                decoration: const InputDecoration(
+                  icon: Icon(Icons.person),
+                  hintText: 'Title of the before item',
+                  labelText: 'Title',
+                ),
+                validator: (String value) {
+                  return value.isEmpty ? 'must not be empty' : null;
+                },
+              ),
+        ListView.builder(
+          shrinkWrap: true,
+          itemCount: _parameters.length,
+          key: UniqueKey(),
+    itemBuilder: (context, index) {
+      return Row(
+          mainAxisSize: MainAxisSize.min,
+          children: <Widget>[
+            Expanded(
+              child: _parameters[index]
+            )
+            ]
+      );
+    }
+        ),
+              Padding(
+                  padding: const EdgeInsets.symmetric(vertical: 16.0),
+                  child: RaisedButton(
+                    onPressed: () {
+                      if (_formKey.currentState.validate()) {
+
+                        LinkedHashMap hashMapProperties = new LinkedHashMap<String, String>();
+
+                        for (var i = 0; i < _parameters.length; i++) {
+                          String parameterValue = _parameters[i].controller.text;
+                          String parameterLabel =  widget.category.parameters[i];
+                          hashMapProperties[parameterLabel]=parameterValue;
+                        }
+
+                        var subCategoryToUpdate = widget.subCategory;
+
+                        Item itemValidated = new Item(
+                          label: label.text,
+                          parameters: hashMapProperties
+                        );
+
+                        if(widget.itemToUpdate!=null){
+                          //_subCategoryBloc.add(UpdateSubCategoryEvent(subCategoryValidated));
+                        }else{
+                          //TODO: id = null & listParam = null
+                          //subCategoryToUpdate.items.add(itemValidated);
+                          var s = cloneMap(subCategoryToUpdate.toMap());
+                          SubCategory sb = SubCategory.fromMap(s);
+                          sb.addItem(itemValidated);
+                          sb.id = subCategoryToUpdate.id;
+                          _subCategoryBloc.add(UpdateSubCategoryEvent(sb));
+                        }
+
+                        _subCategoryBloc.close();
+                        Navigator.of(context).pop();
+                      }
+                    },
+                    child: Text('Submit'),
+                  )),
+            ]
+        )
+    );
+  }
+}

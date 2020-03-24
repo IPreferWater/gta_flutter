@@ -33,4 +33,8 @@ class SubCategory {
   String toString() {
     return 'Category{ label : $label, categoryId: $categoryId items: $items}';
   }
+
+   addItem(Item item){
+    this.items.add(item);
+  }
 }
