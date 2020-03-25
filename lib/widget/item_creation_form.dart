@@ -25,7 +25,6 @@ class _ItemFormDialogState extends State<ItemFormDialog> {
 
   ItemBloc _itemBloc;
   final _formKey = GlobalKey<FormState>();
-  final label = TextEditingController();
   List<TextFormField> _parameters = new List();
 
   @override
@@ -71,17 +70,6 @@ class _ItemFormDialogState extends State<ItemFormDialog> {
         child: ListView(
             padding: const EdgeInsets.all(8),
             children: <Widget>[
-              TextFormField(
-                controller: label,
-                decoration: const InputDecoration(
-                  icon: Icon(Icons.person),
-                  hintText: 'Title of the before item',
-                  labelText: 'Title',
-                ),
-                validator: (String value) {
-                  return value.isEmpty ? 'must not be empty' : null;
-                },
-              ),
         ListView.builder(
           shrinkWrap: true,
           itemCount: _parameters.length,
@@ -113,7 +101,6 @@ class _ItemFormDialogState extends State<ItemFormDialog> {
                         }
 
                         Item itemValidated = new Item(
-                          label: label.text,
                           parameters: listParameters
                         );
 

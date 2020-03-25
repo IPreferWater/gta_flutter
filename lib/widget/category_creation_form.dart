@@ -79,7 +79,6 @@ class _CategoryFormDialogState extends State<CategoryFormDialog> {
                   Expanded(
                     child: TextFormField(
                       controller: _parameters[index],
-
                       decoration: const InputDecoration(
                         icon: Icon(Icons.person),
                         hintText: 'Title of the after item',
@@ -117,7 +116,7 @@ class _CategoryFormDialogState extends State<CategoryFormDialog> {
               Padding(
                   padding: const EdgeInsets.symmetric(vertical: 16.0),
                   child: RaisedButton(
-                    onPressed: () {
+                    onPressed: _parameters.isEmpty ? null : () {
                       if (_formKey.currentState.validate()) {
                         List<String> listParameters = _parameters.map((parameter) => parameter.text).toList();
                         final categoryValidated = Category(
@@ -125,14 +124,12 @@ class _CategoryFormDialogState extends State<CategoryFormDialog> {
                           parameters : listParameters
                         );
 
-                        //TODO: make this code correct
                         if(widget.categoryToUpdate!=null){
                           categoryValidated.id = widget.categoryToUpdate.id;
                           _categoryBloc.add(UpdateCategoryEvent(categoryValidated));
                         }else{
                           _categoryBloc.add(CreateCategoryEvent(categoryValidated));
                         }
-
                         Navigator.of(context).pop();
                       }
                     },
