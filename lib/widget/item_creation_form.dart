@@ -2,6 +2,7 @@ import 'dart:collection';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:gta_flutter/bloc/item_bloc/bloc.dart';
 import 'package:gta_flutter/bloc/sub_category_bloc/bloc.dart';
 import 'package:gta_flutter/model/category.dart';
 import 'package:gta_flutter/model/item.dart';
@@ -11,7 +12,7 @@ import 'package:sembast/utils/value_utils.dart';
 
 class ItemFormDialog extends StatefulWidget{
 
-   SubCategory subCategory;
+  final SubCategory subCategory;
   final Category category;
   final Item itemToUpdate;
 
@@ -26,7 +27,7 @@ class ItemFormDialog extends StatefulWidget{
 }
 class _ItemFormDialogState extends State<ItemFormDialog> {
 
-  SubCategoryBloc _subCategoryBloc;
+  ItemBloc _itemBloc;
   final _formKey = GlobalKey<FormState>();
   final label = TextEditingController();
   List<TextFormField> _parameters = new List();
@@ -35,8 +36,8 @@ class _ItemFormDialogState extends State<ItemFormDialog> {
   void initState(){
     super.initState();
 
-    _subCategoryBloc = BlocProvider.of<SubCategoryBloc>(context);
-    _subCategoryBloc.category = widget.category;
+    _itemBloc = BlocProvider.of<ItemBloc>(context);
+    _itemBloc.subCategory = widget.subCategory;
 
     widget.category.parameters.forEach((parameter) => _parameters.add(
 
@@ -126,12 +127,7 @@ class _ItemFormDialogState extends State<ItemFormDialog> {
                         if(widget.itemToUpdate!=null){
                           //_subCategoryBloc.add(UpdateSubCategoryEvent(subCategoryValidated));
                         }else{
-                          //subCategoryToUpdate.items.add(itemValidated);
-                          var s = cloneMap(subCategoryToUpdate.toMap());
-                          SubCategory sb = SubCategory.fromMap(s);
-                          sb.addItem(itemValidated);
-                          sb.id = subCategoryToUpdate.id;
-                          _subCategoryBloc.add(UpdateSubCategoryEvent(sb));
+                          _itemBloc.add(InsertItem(itemValidated));
                         }
 
                         //_subCategoryBloc.close();

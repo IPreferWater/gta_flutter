@@ -55,17 +55,18 @@ class SubCategoryDao {
     );
 
     print(recordSnapshots);
-    return recordSnapshots.map((snapshot) {
+    var t =  recordSnapshots.map((snapshot) {
       final subCategory = SubCategory.fromMap(snapshot.value);
       subCategory.id = snapshot.key;
       return subCategory;
     }).toList();
+
+    return t;
   }
 
   Future<SubCategory> getSubCategoryById(int subCategoryId) async {
-    final finder = Finder(filter: Filter.equals('id', subCategoryId));
-    var record = await _subCategoryStore.findFirst(await _db, finder: finder);
+    var recordSnapshots = await _subCategoryStore.record(subCategoryId).get(await _db);
 
-    return SubCategory.fromMap(record.value);
+    return SubCategory.fromMap(recordSnapshots);
   }
 }

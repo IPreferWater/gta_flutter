@@ -37,10 +37,12 @@ class CategoryDao {
       await _db,
     );
 
-    return recordSnapshots.map((snapshot) {
+    var t = recordSnapshots.map((snapshot) {
       final category = Category.fromMap(snapshot.value);
       category.id = snapshot.key;
       return category;
     }).toList();
+
+    return t;
   }
 }

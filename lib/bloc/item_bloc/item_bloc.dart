@@ -18,9 +18,13 @@ class ItemBloc extends Bloc<ItemEvent, ItemState> {
   Stream<ItemState> mapEventToState(
       ItemEvent event,
       ) async* {
-    if ( event is InsertItem) {
+    if ( event is LoadItemsEvent){
+      yield* _reloadItems();
+
+    } else if ( event is InsertItem) {
       subCategory.addItem(event.item);
       await _subCategoryDao.update(subCategory);
+      yield* _reloadItems();
     }
    /* if (event is LoadSubCategoriesEvent) {
       yield* _reloadCategories();
@@ -47,9 +51,8 @@ class ItemBloc extends Bloc<ItemEvent, ItemState> {
     }*/
   }
 
-  Stream<ItemState> _reloadCategories() async* {
-    //final subCategories = await _subCategoryDao.getAllFromCategory(category.id);
-    //print(subCategories);
-    //yield ItemsLoadingSuccessState(subCategories);
+  Stream<ItemState> _reloadItems() async* {
+    final subCategoryFound = await _subCategoryDao.getSubCategoryById(subCategory.id);
+    yield ItemsLoadingSuccessState(subCategoryFound.items);
   }
 }
