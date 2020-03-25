@@ -58,15 +58,7 @@ class _ItemScreenState extends State<ItemScreen> {
           return
             Column(
                 children: <Widget>[
-                  CarouselSlider(
-                    items: <Widget>[
-                      for ( var item in state.items ) Text(item.toString())
-                    ],
-                    autoPlay: false,
-                    enlargeCenterPage: true,
-                    viewportFraction: 0.9,
-                    aspectRatio: 2.0,
-                  ),
+                  _buildItemScreen(state.items),
                   AddButton(
                       formDialog: ItemFormDialog(category: widget.category, subCategory: widget.subCategory,)
                   ),
@@ -82,4 +74,21 @@ class _ItemScreenState extends State<ItemScreen> {
       },
     );
   }
+}
+
+Widget _buildItemScreen(List<Item> items){
+
+  if(items.isEmpty){
+    return Text("no item yet");
+  }
+
+  return CarouselSlider(
+    items: <Widget>[
+      for ( var item in items ) Text(item.toString())
+    ],
+    autoPlay: false,
+    enlargeCenterPage: true,
+    viewportFraction: 0.9,
+    aspectRatio: 2.0,
+  );
 }
