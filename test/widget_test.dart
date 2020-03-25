@@ -36,7 +36,7 @@ void main() {
     var subCategoryNullItems = SubCategory(label: "label", categoryId: 1);
     expect(subCategoryNullItems.items, <Item>[] );
 
-    Item item = Item(label: "mockLabel", parameters: null);
+    Item item = Item( parameters: null);
     List<Item> listItem = [item];
 
     subCategoryNullItems.addItem(item);

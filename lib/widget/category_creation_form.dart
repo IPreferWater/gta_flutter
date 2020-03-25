@@ -16,11 +16,12 @@ class CategoryFormDialog extends StatefulWidget{
 }
 class _CategoryFormDialogState extends State<CategoryFormDialog> {
 
+  FocusNode myFocusNode;
   CategoryBloc _categoryBloc;
 
   final _formKey = GlobalKey<FormState>();
   final label = TextEditingController();
-  List<TextEditingController> _parameters = new List();
+  List<TextFormField> _parameters = new List();
 
 
   Category category;
@@ -28,6 +29,7 @@ class _CategoryFormDialogState extends State<CategoryFormDialog> {
   @override
   void initState(){
     super.initState();
+    myFocusNode = FocusNode();
 
     _categoryBloc = BlocProvider.of<CategoryBloc>(context);
 
@@ -35,7 +37,19 @@ class _CategoryFormDialogState extends State<CategoryFormDialog> {
       category = this.widget.categoryToUpdate;
       label.text = category.label;
       category.parameters.forEach((parameter) {
-        _parameters.add( new TextEditingController(text: parameter));
+        _parameters.add(
+            new TextFormField(
+              controller: new TextEditingController(text: parameter),
+              decoration: const InputDecoration(
+                icon: Icon(Icons.person),
+                hintText: 'Title of the after item',
+                labelText: 'Title',
+              ),
+              validator: (String value) {
+                return value.isEmpty ? 'must not be empty' : null;
+              },
+            )
+        );
       });
     }
   }
@@ -77,17 +91,7 @@ class _CategoryFormDialogState extends State<CategoryFormDialog> {
                 mainAxisSize: MainAxisSize.min,
                 children: <Widget>[
                   Expanded(
-                    child: TextFormField(
-                      controller: _parameters[index],
-                      decoration: const InputDecoration(
-                        icon: Icon(Icons.person),
-                        hintText: 'Title of the after item',
-                        labelText: 'Title',
-                      ),
-                      validator: (String value) {
-                        return value.isEmpty ? 'must not be empty' : null;
-                      },
-                    ),
+                    child: _parameters[index]
                   ),
                   IconButton(
                     icon: Icon(Icons.edit),
@@ -109,7 +113,19 @@ class _CategoryFormDialogState extends State<CategoryFormDialog> {
               FloatingActionButton(
                 child: Icon(Icons.add),
                 onPressed: () {
-                  _parameters.add(new TextEditingController());
+                  //_parameters.add(new TextEditingController());
+                  _parameters.add(
+                      new TextFormField(
+                    controller: new TextEditingController(),
+                    decoration: const InputDecoration(
+                      icon: Icon(Icons.person),
+                      hintText: 'Title of the after item',
+                      labelText: 'Title',
+                    ),
+                    validator: (String value) {
+                      return value.isEmpty ? 'must not be empty' : null;
+                    },
+                  ));
                   this.setState((){});
                 },
               ),
@@ -118,7 +134,7 @@ class _CategoryFormDialogState extends State<CategoryFormDialog> {
                   child: RaisedButton(
                     onPressed: _parameters.isEmpty ? null : () {
                       if (_formKey.currentState.validate()) {
-                        List<String> listParameters = _parameters.map((parameter) => parameter.text).toList();
+                        List<String> listParameters = _parameters.map((parameter) => parameter.controller.text).toList();
                         final categoryValidated = Category(
                           label: label.text,
                           parameters : listParameters
