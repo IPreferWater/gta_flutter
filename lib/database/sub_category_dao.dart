@@ -1,4 +1,5 @@
 
+import 'package:gta_flutter/model/item.dart';
 import 'package:gta_flutter/model/sub_category.dart';
 import 'package:sembast/sembast.dart';
 
@@ -59,5 +60,12 @@ class SubCategoryDao {
       subCategory.id = snapshot.key;
       return subCategory;
     }).toList();
+  }
+
+  Future<SubCategory> getSubCategoryById(int subCategoryId) async {
+    final finder = Finder(filter: Filter.equals('id', subCategoryId));
+    var record = await _subCategoryStore.findFirst(await _db, finder: finder);
+
+    return SubCategory.fromMap(record.value);
   }
 }

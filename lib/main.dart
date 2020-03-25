@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:gta_flutter/bloc/category_bloc/bloc.dart';
+import 'package:gta_flutter/bloc/item_bloc/bloc.dart';
 import 'package:gta_flutter/bloc/sub_category_bloc/bloc.dart';
 import 'package:gta_flutter/screen/category_screen.dart';
 
@@ -17,6 +18,9 @@ class MyApp extends StatelessWidget {
         ),
         BlocProvider<SubCategoryBloc>(
           create: (BuildContext context) => SubCategoryBloc(),
+        ),
+        BlocProvider<ItemBloc>(
+          create: (BuildContext context) => ItemBloc(),
         )
       ],
       child: MaterialApp(
