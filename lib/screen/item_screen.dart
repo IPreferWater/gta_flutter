@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:gta_flutter/bloc/item_bloc/bloc.dart';
 import 'package:gta_flutter/model/category.dart';
+import 'package:gta_flutter/model/item.dart';
 import 'package:gta_flutter/model/sub_category.dart';
 import 'package:gta_flutter/widget/add_button.dart';
 import 'package:gta_flutter/widget/carousel_slider.dart';
@@ -23,7 +24,7 @@ class ItemScreen extends StatefulWidget{
 class _ItemScreenState extends State<ItemScreen> {
 
   ItemBloc _itemBloc;
-  
+
   @override
   void initState(){
     super.initState();
@@ -59,14 +60,7 @@ class _ItemScreenState extends State<ItemScreen> {
                 children: <Widget>[
                   CarouselSlider(
                     items: <Widget>[
-                      ListView.builder(
-                          shrinkWrap: true,
-                          itemCount: widget.subCategory.items.length,
-                          key: UniqueKey(),
-                          itemBuilder: (context, index) {
-                            return Text(widget.subCategory.items[index].toString());
-                          }
-                      )
+                      for ( var item in state.items ) Text(item.toString())
                     ],
                     autoPlay: false,
                     enlargeCenterPage: true,
