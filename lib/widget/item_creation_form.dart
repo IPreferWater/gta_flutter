@@ -1,14 +1,10 @@
-import 'dart:collection';
-
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:gta_flutter/bloc/item_bloc/bloc.dart';
-import 'package:gta_flutter/bloc/sub_category_bloc/bloc.dart';
 import 'package:gta_flutter/model/category.dart';
 import 'package:gta_flutter/model/item.dart';
 import 'package:gta_flutter/model/parameter.dart';
 import 'package:gta_flutter/model/sub_category.dart';
-import 'package:sembast/utils/value_utils.dart';
 
 class ItemFormDialog extends StatefulWidget{
 
@@ -107,7 +103,6 @@ class _ItemFormDialogState extends State<ItemFormDialog> {
                     onPressed: () {
                       if (_formKey.currentState.validate()) {
 
-                        //LinkedHashMap hashMapProperties = new LinkedHashMap<String, String>();
                         List<Parameter> listParameters = List();
 
                         for (var i = 0; i < _parameters.length; i++) {
@@ -117,20 +112,18 @@ class _ItemFormDialogState extends State<ItemFormDialog> {
                           listParameters.add(newParameter);
                         }
 
-                        var subCategoryToUpdate = widget.subCategory;
-
                         Item itemValidated = new Item(
                           label: label.text,
                           parameters: listParameters
                         );
 
                         if(widget.itemToUpdate!=null){
-                          //_subCategoryBloc.add(UpdateSubCategoryEvent(subCategoryValidated));
-                        }else{
-                          _itemBloc.add(InsertItem(itemValidated));
+                          // first delete it then add it again to change it
+                          //_itemBloc.add(DeleteItem(itemValidated));
                         }
+                          _itemBloc.add(InsertItem(itemValidated));
 
-                        //_subCategoryBloc.close();
+
                         Navigator.of(context).pop();
                       }
                     },

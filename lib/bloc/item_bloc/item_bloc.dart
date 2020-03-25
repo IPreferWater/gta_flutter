@@ -1,7 +1,6 @@
 import 'dart:async';
 import 'package:bloc/bloc.dart';
 import 'package:gta_flutter/database/sub_category_dao.dart';
-import 'package:gta_flutter/model/category.dart';
 import 'package:gta_flutter/model/sub_category.dart';
 import 'item_event.dart';
 import 'item_state.dart';
