@@ -7,6 +7,7 @@ import 'package:gta_flutter/model/sub_category.dart';
 import 'package:gta_flutter/widget/add_button.dart';
 import 'package:gta_flutter/widget/carousel_slider.dart';
 import 'package:gta_flutter/widget/item_creation_form.dart';
+import 'package:gta_flutter/widget/item_pannel.dart';
 
 class ItemScreen extends StatefulWidget{
 
@@ -74,21 +75,26 @@ class _ItemScreenState extends State<ItemScreen> {
       },
     );
   }
-}
 
-Widget _buildItemScreen(List<Item> items){
+  Widget _buildItemScreen(List<Item> items){
 
-  if(items.isEmpty){
-    return Text("no item yet");
+    if(items.isEmpty){
+      return Text("no item yet");
+    }
+
+    return CarouselSlider(
+      items: <Widget>[
+        for ( var item in items ) ItemPanel(item : item)
+      ],
+      autoPlay: false,
+      enlargeCenterPage: true,
+      //viewportFraction: 0.9,
+      //aspectRatio: 2.0,
+    );
   }
 
-  return CarouselSlider(
-    items: <Widget>[
-      for ( var item in items ) Text(item.toString())
-    ],
-    autoPlay: false,
-    enlargeCenterPage: true,
-    viewportFraction: 0.9,
-    aspectRatio: 2.0,
-  );
+  testtest(){
+    print("okaayyyyy");
+  }
 }
+
