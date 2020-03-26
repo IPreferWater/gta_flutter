@@ -1,3 +1,4 @@
+import 'package:flutter/foundation.dart';
 import 'package:gta_flutter/model/item.dart';
 import 'package:meta/meta.dart';
 
@@ -41,5 +42,9 @@ class SubCategory {
 
    addItem(Item item){
     this.items.add(item);
+  }
+
+  deleteItem(Item itemToDelete){
+    this.items.remove(itemToDelete);
   }
 }

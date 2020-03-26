@@ -70,7 +70,7 @@ void main() {
     expect(item1 == item1NewAshCode, true );
     expect(itemAB == item1NewAshCode, false);
 
-    // we can now retrieve 
+    // we can now retrieve
     int index = subCategory.items.indexOf(item1NewAshCode);
     expect(index, 0);
 

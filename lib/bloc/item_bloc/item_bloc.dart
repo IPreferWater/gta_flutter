@@ -25,6 +25,11 @@ class ItemBloc extends Bloc<ItemEvent, ItemState> {
       await _subCategoryDao.update(subCategory);
       yield* _reloadItems();
     }
+    else if ( event is DeleteItem) {
+      subCategory.deleteItem(event.item);
+      await _subCategoryDao.update(subCategory);
+      yield* _reloadItems();
+      }
    /* if (event is LoadSubCategoriesEvent) {
       yield* _reloadCategories();
     }
