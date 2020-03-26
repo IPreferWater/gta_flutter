@@ -1,7 +1,8 @@
+import 'package:equatable/equatable.dart';
 import 'package:gta_flutter/model/parameter.dart';
 import 'package:meta/meta.dart';
 
-class Item {
+class Item extends Equatable {
 
   List<Parameter> parameters;
 
@@ -23,7 +24,18 @@ class Item {
 
   @override
   String toString() {
-    return 'Item{\n'
-        'parameters : $parameters\n }';
+    return ' Item { parameters : $parameters }';
   }
+
+  /*@override
+  bool operator ==(Object other) =>
+      identical(this, other) ||
+          other is Item &&
+              runtimeType == other.runtimeType &&
+              parameters == other.parameters;
+
+  @override
+  int get hashCode => runtimeType.hashCode;*/
+  @override
+  List<Object> get props => [parameters];
 }

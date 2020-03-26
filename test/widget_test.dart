@@ -12,6 +12,7 @@ import 'package:flutter_test/flutter_test.dart';
 
 import 'package:gta_flutter/main.dart';
 import 'package:gta_flutter/model/item.dart';
+import 'package:gta_flutter/model/parameter.dart';
 import 'package:gta_flutter/model/sub_category.dart';
 
 void main() {
@@ -46,5 +47,37 @@ void main() {
 
     var subCategoryWithItems = SubCategory(label: "label", categoryId: 1, items: listItem);
     expect(subCategoryWithItems.items, listItem );
+  });
+
+  testWidgets('equatable package test', (WidgetTester tester) async {
+    Parameter parameter1 = Parameter(key: "key1", value: "value1");
+    Parameter parameter2 = Parameter(key: "key2", value: "value2");
+    Item item1 = Item(parameters: [parameter1, parameter2]);
+
+    Parameter parameterA = Parameter(key: "key1", value: "valueA");
+    Parameter parameterB = Parameter(key: "key2", value: "valueB");
+    Item itemAB = Item(parameters: [parameterA, parameterB]);
+
+    var subCategory = SubCategory(label: "label", categoryId: 1, items: [item1, itemAB] );
+
+    // create a new item with different with same value but different hashcode
+    Parameter parameter1NewAshCode = Parameter(key: "key1", value: "value1");
+    Parameter parameter2NewAshCode = Parameter(key: "key2", value: "value2");
+    Item item1NewAshCode = Item(parameters: [parameter1NewAshCode, parameter2NewAshCode]);
+
+    expect(parameter1 == parameter1NewAshCode, true);
+    expect(parameter1 == parameter2NewAshCode, false);
+    expect(item1 == item1NewAshCode, true );
+    expect(itemAB == item1NewAshCode, false);
+
+    // we can now retrieve 
+    int index = subCategory.items.indexOf(item1NewAshCode);
+    expect(index, 0);
+
+    Parameter parameterANewAshCode = Parameter(key: "key1", value: "valueA");
+    Parameter parameterBNewAshCode = Parameter(key: "key2", value: "valueB");
+    Item itemABNewAshCode = Item(parameters: [parameterANewAshCode, parameterBNewAshCode]);
+    int indexAB = subCategory.items.indexOf(itemABNewAshCode);
+    expect(indexAB, 1);
   });
 }

@@ -1,8 +1,9 @@
 import 'dart:collection';
 
+import 'package:equatable/equatable.dart';
 import 'package:meta/meta.dart';
 
-class Parameter {
+class Parameter extends Equatable {
 
   String key;
   String value;
@@ -25,8 +26,20 @@ class Parameter {
 
   @override
   String toString() {
-    return 'Parameter{ \n'
-        'key : $key,\n'
-        'value : $value }';
+    return 'Parameter{ key : $key, value : $value }';
   }
+
+  /*@override
+  bool operator ==(Object other) =>
+      identical(this, other) ||
+          other is Parameter &&
+              runtimeType == other.runtimeType &&
+              key == other.key &&
+              value == other.value;
+
+  @override
+  int get hashCode => key.hashCode ^ value.hashCode;*/
+
+  @override
+  List<Object> get props => [key,value];
 }
