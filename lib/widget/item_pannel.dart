@@ -6,8 +6,10 @@ import 'package:gta_flutter/model/item.dart';
 class ItemPanel extends StatefulWidget{
 
   final Item item;
+  final void Function(Item item) showDialogEditItem;
 
   ItemPanel({
+    @required this.showDialogEditItem,
     @required this.item
   });
 
@@ -37,7 +39,7 @@ class _ItemPanelState extends State<ItemPanel> {
         child: Icon(Icons.edit),
         backgroundColor: Colors.green,
         onPressed: () {
-        //  _itemBloc.add(event)
+        widget.showDialogEditItem(widget.item);
         },
       ),
       FloatingActionButton(

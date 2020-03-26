@@ -50,7 +50,7 @@ class _ItemFormDialogState extends State<ItemFormDialog> {
       ));
 
     if(this.widget.itemToUpdate!=null){
-      //label.text =this.widget.subCategoryToUpdate.label;
+      print("todo Edit item");
     }
   }
 

@@ -27,7 +27,6 @@ class SubCategory {
     return SubCategory(
         label: map['label'],
         categoryId: map['categoryId'],
-        //items: map['items'].cast<Item>());
         items: map['items'].map((mapping) => Item.fromMap(mapping)).toList().cast<Item>());
   }
 

@@ -61,7 +61,7 @@ class _ItemScreenState extends State<ItemScreen> {
                 children: <Widget>[
                   _buildItemScreen(state.items),
                   AddButton(
-                      formDialog: ItemFormDialog(category: widget.category, subCategory: widget.subCategory,)
+                      formDialog: ItemFormDialog(category: widget.category, subCategory: widget.subCategory)
                   ),
                 ]
             );
@@ -84,17 +84,18 @@ class _ItemScreenState extends State<ItemScreen> {
 
     return CarouselSlider(
       items: <Widget>[
-        for ( var item in items ) ItemPanel(item : item)
+        for ( var item in items ) ItemPanel(showDialogEditItem:showDialogEditItem, item : item)
       ],
       autoPlay: false,
       enlargeCenterPage: true,
-      //viewportFraction: 0.9,
-      //aspectRatio: 2.0,
     );
   }
 
-  testtest(){
-    print("okaayyyyy");
+   showDialogEditItem(Item item){
+    showDialog(
+      context: context,
+      builder: (BuildContext context) => ItemFormDialog(category: widget.category, subCategory: widget.subCategory, itemToUpdate: item),
+    );
   }
 }
 
