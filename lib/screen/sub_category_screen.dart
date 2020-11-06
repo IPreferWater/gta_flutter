@@ -5,6 +5,7 @@ import 'package:gta_flutter/model/category.dart';
 import 'package:gta_flutter/model/sub_category.dart';
 import 'package:gta_flutter/screen/item_screen.dart';
 import 'package:gta_flutter/widget/add_button.dart';
+import 'package:gta_flutter/widget/category_creation_form.dart';
 import 'package:gta_flutter/widget/sub_category_creation_form.dart';
 
 class SubCategoryScreen extends StatefulWidget{
@@ -20,7 +21,7 @@ class SubCategoryScreen extends StatefulWidget{
 }
 class _SubCategoryScreenState extends State<SubCategoryScreen> {
 
-  SubCategoryBloc _subCategoryBloc;
+  //SubCategoryBloc _subCategoryBloc;
 
   final label = TextEditingController();
 
@@ -28,9 +29,9 @@ class _SubCategoryScreenState extends State<SubCategoryScreen> {
   @override
   void initState(){
     super.initState();
-    _subCategoryBloc = BlocProvider.of<SubCategoryBloc>(context);
-    _subCategoryBloc.category = widget.category;
-    _subCategoryBloc.add(LoadSubCategoriesEvent());
+   // _subCategoryBloc = BlocProvider.of<SubCategoryBloc>(context);
+   // _subCategoryBloc.category = widget.category;
+   // _subCategoryBloc.add(LoadSubCategoriesEvent());
   }
 
   @override
@@ -47,7 +48,33 @@ class _SubCategoryScreenState extends State<SubCategoryScreen> {
   }
 
   Widget _creationMenu() {
-    return BlocBuilder(
+    return Column(
+        children: <Widget>[
+          ListView.builder(
+            shrinkWrap: true,
+            itemCount: widget.category.subCategories.length,
+            itemBuilder: (context, index) {
+              final displayedSubCategory = widget.category.subCategories[index];
+              return ListTile(
+                title: Text(displayedSubCategory.id.toString()),
+                subtitle: Text(
+                    'id : ${displayedSubCategory.id} label : ${displayedSubCategory.label}'),
+                trailing: _buildUpdateDeleteSubCategory(displayedSubCategory),
+                onTap: () {
+                  //go to item screen
+                /*  Navigator.push(context,
+                      MaterialPageRoute(builder: (context) => SubCategoryScreen(category: displayedSubCategory,))
+                  );*/
+                },
+              );
+            },
+          ),
+          AddButton(
+              formDialog: CategoryFormDialog()
+          ),
+        ]
+    );
+   /* return BlocBuilder(
       bloc: _subCategoryBloc,
       builder: (BuildContext context, SubCategoryState state){
         if (state is SubCategoryLoadingState){
@@ -91,7 +118,7 @@ class _SubCategoryScreenState extends State<SubCategoryScreen> {
               textAlign: TextAlign.center,
             ));
       },
-    );
+    );*/
   }
 
   Row _buildUpdateDeleteSubCategory(SubCategory subCategory){
@@ -113,7 +140,8 @@ class _SubCategoryScreenState extends State<SubCategoryScreen> {
         IconButton(
           icon: Icon(Icons.delete_outline),
           onPressed: () {
-            _subCategoryBloc.add(DeleteSubCategoryEvent(subCategory));
+            //_subCategoryBloc.add(DeleteSubCategoryEvent(subCategory));
+            //delete this subcategory from json list
           },
         ),
       ],

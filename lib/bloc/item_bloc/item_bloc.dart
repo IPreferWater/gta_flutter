@@ -57,6 +57,6 @@ class ItemBloc extends Bloc<ItemEvent, ItemState> {
 
   Stream<ItemState> _reloadItems() async* {
     final subCategoryFound = await _subCategoryDao.getSubCategoryById(subCategory.id);
-    yield ItemsLoadingSuccessState(subCategoryFound.items);
+   // yield ItemsLoadingSuccessState(subCategoryFound.items);
   }
 }

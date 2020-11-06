@@ -7,18 +7,18 @@ class SubCategory {
   int id;
   int categoryId;
   String label;
-  List<Item> items = <Item>[];
+  //List<Item> items = <Item>[];
 
   SubCategory({
     @required this.label,
-    @required this.categoryId,
-    this.items }) { items ??= <Item>[];}
+    @required this.categoryId});
+   /* this.items }) { items ??= <Item>[];}*/
 
   Map<String, dynamic> toMap() {
     return {
       'label' : label,
       'categoryId': categoryId,
-      'items': items.map((item) => item.toMap())
+    //  'items': items.map((item) => item.toMap())
     };
   }
 
@@ -26,8 +26,8 @@ class SubCategory {
 
     return SubCategory(
         label: map['label'],
-        categoryId: map['categoryId'],
-        items: map['items'].map((mapping) => Item.fromMap(mapping)).toList().cast<Item>());
+        categoryId: map['categoryId']);
+       // items: map['items'].map((mapping) => Item.fromMap(mapping)).toList().cast<Item>());
   }
 
   @override
@@ -35,15 +35,15 @@ class SubCategory {
     return 'SubCategory{ \n'
         'id : $id,\n'
         ' label : $label,\n'
-        ' categoryId: $categoryId,\n,'
-        ' items: $items}\n';
+        ' categoryId: $categoryId,\n,';
+       // ' items: $items}\n';
   }
 
    addItem(Item item){
-    this.items.add(item);
+  //  this.items.add(item);
   }
 
   deleteItem(Item itemToDelete){
-    this.items.remove(itemToDelete);
+  //  this.items.remove(itemToDelete);
   }
 }

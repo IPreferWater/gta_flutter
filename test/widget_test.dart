@@ -11,6 +11,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 
 import 'package:gta_flutter/main.dart';
+import 'package:gta_flutter/model/category.dart';
 import 'package:gta_flutter/model/item.dart';
 import 'package:gta_flutter/model/parameter.dart';
 import 'package:gta_flutter/model/sub_category.dart';
@@ -33,7 +34,7 @@ void main() {
     expect(find.text('1'), findsOneWidget);
   });
 
-  testWidgets('SubCategory item should have a default value', (WidgetTester tester) async {
+ /* testWidgets('SubCategory item should have a default value', (WidgetTester tester) async {
     var subCategoryNullItems = SubCategory(label: "label", categoryId: 1);
     expect(subCategoryNullItems.items, <Item>[] );
 
@@ -47,9 +48,16 @@ void main() {
 
     var subCategoryWithItems = SubCategory(label: "label", categoryId: 1, items: listItem);
     expect(subCategoryWithItems.items, listItem );
+  });*/
+
+  testWidgets('xxxxx', (WidgetTester tester) async {
+    var category = Category(label: "bonjour", parameters: ["20", "3005", "2"]);
+    var res = category.toMap();
+    print(res);
+
   });
 
-  testWidgets('equatable package test', (WidgetTester tester) async {
+ /* testWidgets('equatable package test', (WidgetTester tester) async {
     Parameter parameter1 = Parameter(key: "key1", value: "value1");
     Parameter parameter2 = Parameter(key: "key2", value: "value2");
     Item item1 = Item(parameters: [parameter1, parameter2]);
@@ -79,5 +87,5 @@ void main() {
     Item itemABNewAshCode = Item(parameters: [parameterANewAshCode, parameterBNewAshCode]);
     int indexAB = subCategory.items.indexOf(itemABNewAshCode);
     expect(indexAB, 1);
-  });
+  });*/
 }
