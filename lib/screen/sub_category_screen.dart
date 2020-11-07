@@ -61,9 +61,9 @@ class _SubCategoryScreenState extends State<SubCategoryScreen> {
                 trailing: _buildUpdateDeleteSubCategory(index),
                 onTap: () {
                   //go to item screen
-                /*  Navigator.push(context,
-                      MaterialPageRoute(builder: (context) => SubCategoryScreen(category: displayedSubCategory,))
-                  );*/
+                  Navigator.push(context,
+                      MaterialPageRoute(builder: (context) => ItemScreen(category: widget.category, subCategoryIndex: index))
+                  );
                 },
               );
             },

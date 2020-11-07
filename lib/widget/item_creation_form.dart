@@ -13,7 +13,7 @@ class ItemFormDialog extends StatefulWidget{
 
   ItemFormDialog({
     @required this.category,
-    @required this.subCategory,
+    this.subCategory,
     this.itemToUpdate
   });
 

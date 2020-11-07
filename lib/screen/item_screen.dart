@@ -11,11 +11,11 @@ import 'package:gta_flutter/widget/item_pannel.dart';
 class ItemScreen extends StatefulWidget{
 
   final Category category;
-  final SubCategory subCategory;
+  final int subCategoryIndex;
 
   ItemScreen({
     @required this.category,
-    @required this.subCategory
+    @required this.subCategoryIndex
   });
 
   _ItemScreenState createState() => _ItemScreenState();
@@ -24,6 +24,7 @@ class ItemScreen extends StatefulWidget{
 class _ItemScreenState extends State<ItemScreen> {
 
   //ItemBloc _itemBloc;
+
 
   @override
   void initState(){
@@ -47,7 +48,16 @@ class _ItemScreenState extends State<ItemScreen> {
   }
 
   Widget _creationMenu() {
-    return Text("todo");
+    final items = this.widget.category.subCategories[widget.subCategoryIndex].items;
+
+    return     Column(
+        children: <Widget>[
+          _buildItemScreen(items),
+          AddButton(
+              formDialog: ItemFormDialog(category: widget.category)
+          ),
+        ]
+    );
   /*  return BlocBuilder(
       bloc: _itemBloc,
       builder: (BuildContext context, ItemState state){
@@ -94,7 +104,7 @@ class _ItemScreenState extends State<ItemScreen> {
    showDialogEditItem(Item item){
     showDialog(
       context: context,
-      builder: (BuildContext context) => ItemFormDialog(category: widget.category, subCategory: widget.subCategory, itemToUpdate: item),
+      builder: (BuildContext context) => ItemFormDialog(category: widget.category,  itemToUpdate: item),
     );
   }
 }
