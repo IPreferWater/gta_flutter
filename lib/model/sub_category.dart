@@ -4,7 +4,6 @@ import 'package:meta/meta.dart';
 
 class SubCategory {
 
-  int id;
   int categoryId;
   String label;
   List<Item> items = <Item>[];
@@ -33,7 +32,6 @@ class SubCategory {
   @override
   String toString() {
     return 'SubCategory{ \n'
-        'id : $id,\n'
         ' label : $label,\n'
         ' categoryId: $categoryId,\n'
         ' items: $items}\n';

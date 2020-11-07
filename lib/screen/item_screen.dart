@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:gta_flutter/bloc/item_bloc/bloc.dart';
 import 'package:gta_flutter/model/category.dart';
 import 'package:gta_flutter/model/item.dart';
 import 'package:gta_flutter/model/sub_category.dart';
@@ -24,14 +23,14 @@ class ItemScreen extends StatefulWidget{
 }
 class _ItemScreenState extends State<ItemScreen> {
 
-  ItemBloc _itemBloc;
+  //ItemBloc _itemBloc;
 
   @override
   void initState(){
     super.initState();
-    _itemBloc = BlocProvider.of<ItemBloc>(context);
-    _itemBloc.subCategory = widget.subCategory;
-    _itemBloc.add(LoadItemsEvent());
+   // _itemBloc = BlocProvider.of<ItemBloc>(context);
+   // _itemBloc.subCategory = widget.subCategory;
+   // _itemBloc.add(LoadItemsEvent());
   }
 
   @override
@@ -48,7 +47,8 @@ class _ItemScreenState extends State<ItemScreen> {
   }
 
   Widget _creationMenu() {
-    return BlocBuilder(
+    return Text("todo");
+  /*  return BlocBuilder(
       bloc: _itemBloc,
       builder: (BuildContext context, ItemState state){
         if (state is ItemLoadingState){
@@ -73,7 +73,7 @@ class _ItemScreenState extends State<ItemScreen> {
               textAlign: TextAlign.center,
             ));
       },
-    );
+    );*/
   }
 
   Widget _buildItemScreen(List<Item> items){

@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:gta_flutter/bloc/item_bloc/bloc.dart';
 import 'package:gta_flutter/model/category.dart';
 import 'package:gta_flutter/model/item.dart';
 import 'package:gta_flutter/model/parameter.dart';
@@ -23,7 +22,7 @@ class ItemFormDialog extends StatefulWidget{
 }
 class _ItemFormDialogState extends State<ItemFormDialog> {
 
-  ItemBloc _itemBloc;
+  //ItemBloc _itemBloc;
   final _formKey = GlobalKey<FormState>();
   List<TextFormField> _parameters = new List();
 
@@ -31,8 +30,8 @@ class _ItemFormDialogState extends State<ItemFormDialog> {
   void initState(){
     super.initState();
 
-    _itemBloc = BlocProvider.of<ItemBloc>(context);
-    _itemBloc.subCategory = widget.subCategory;
+  //  _itemBloc = BlocProvider.of<ItemBloc>(context);
+   // _itemBloc.subCategory = widget.subCategory;
 
     widget.category.parameters.forEach((parameter) => _parameters.add(
 
@@ -108,7 +107,7 @@ class _ItemFormDialogState extends State<ItemFormDialog> {
                           // first delete it then add it again to change it
                           //_itemBloc.add(DeleteItem(itemValidated));
                         }
-                          _itemBloc.add(InsertItem(itemValidated));
+                        //  _itemBloc.add(InsertItem(itemValidated));
 
 
                         Navigator.of(context).pop();

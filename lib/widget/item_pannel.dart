@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:gta_flutter/bloc/item_bloc/bloc.dart';
 import 'package:gta_flutter/model/item.dart';
 
 class ItemPanel extends StatefulWidget{
@@ -18,12 +17,12 @@ class ItemPanel extends StatefulWidget{
 }
 class _ItemPanelState extends State<ItemPanel> {
 
-  ItemBloc _itemBloc;
+ // ItemBloc _itemBloc;
 
   @override
   void initState(){
     super.initState();
-    _itemBloc = BlocProvider.of<ItemBloc>(context);
+  //  _itemBloc = BlocProvider.of<ItemBloc>(context);
   }
 
   @override
@@ -46,7 +45,7 @@ class _ItemPanelState extends State<ItemPanel> {
         child: Icon(Icons.delete),
         backgroundColor: Colors.red,
         onPressed: () {
-          _itemBloc.add(DeleteItem(widget.item));
+        //  _itemBloc.add(DeleteItem(widget.item));
         },
       )
       ])

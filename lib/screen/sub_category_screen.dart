@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:gta_flutter/bloc/sub_category_bloc/bloc.dart';
 import 'package:gta_flutter/model/category.dart';
 import 'package:gta_flutter/model/sub_category.dart';
 import 'package:gta_flutter/screen/item_screen.dart';
@@ -56,10 +55,10 @@ class _SubCategoryScreenState extends State<SubCategoryScreen> {
             itemBuilder: (context, index) {
               final displayedSubCategory = widget.category.subCategories[index];
               return ListTile(
-                title: Text(displayedSubCategory.id.toString()),
+                title: Text(displayedSubCategory.label),
                 subtitle: Text(
-                    'id : ${displayedSubCategory.id} label : ${displayedSubCategory.label}'),
-                trailing: _buildUpdateDeleteSubCategory(displayedSubCategory),
+                    'label : ${displayedSubCategory.label}'),
+                trailing: _buildUpdateDeleteSubCategory(index),
                 onTap: () {
                   //go to item screen
                 /*  Navigator.push(context,
@@ -121,7 +120,7 @@ class _SubCategoryScreenState extends State<SubCategoryScreen> {
     );*/
   }
 
-  Row _buildUpdateDeleteSubCategory(SubCategory subCategory){
+  Row _buildUpdateDeleteSubCategory(int subCategoryIndex){
     return Row(
       mainAxisSize: MainAxisSize.min,
       children: <Widget>[
@@ -131,7 +130,7 @@ class _SubCategoryScreenState extends State<SubCategoryScreen> {
             showDialog(
               context: context,
               builder: (BuildContext context) => SubCategoryFormDialog(
-                subCategoryToUpdate: subCategory,
+                subCategoryIndexToUpdate: subCategoryIndex,
                 category: widget.category,
               ),
             );
