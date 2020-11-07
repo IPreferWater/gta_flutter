@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:gta_flutter/bloc/category_bloc/bloc.dart';
 import 'package:gta_flutter/bloc/sub_category_bloc/bloc.dart';
 import 'package:gta_flutter/model/category.dart';
 import 'package:gta_flutter/model/item.dart';
@@ -20,7 +21,7 @@ class SubCategoryFormDialog extends StatefulWidget{
 }
 class _SubCategoryFormDialogState extends State<SubCategoryFormDialog> {
 
-  SubCategoryBloc _subCategoryBloc;
+  CategoryBloc _categoryBloc;
   final _formKey = GlobalKey<FormState>();
   final label = TextEditingController();
 
@@ -28,8 +29,8 @@ class _SubCategoryFormDialogState extends State<SubCategoryFormDialog> {
   void initState(){
     super.initState();
 
-    _subCategoryBloc = BlocProvider.of<SubCategoryBloc>(context);
-    _subCategoryBloc.category = widget.category;
+    _categoryBloc = BlocProvider.of<CategoryBloc>(context);
+   // _subCategoryBloc.category = widget.category;
 
     if(this.widget.subCategoryToUpdate!=null){
       label.text =this.widget.subCategoryToUpdate.label;
@@ -75,9 +76,11 @@ class _SubCategoryFormDialogState extends State<SubCategoryFormDialog> {
                           //subCategoryValidated.categoryId = widget.category.id;
                          // subCategoryValidated.items = widget.subCategoryToUpdate.items;
 
-                          _subCategoryBloc.add(UpdateSubCategoryEvent(subCategoryValidated));
+                          //_subCategoryBloc.add(UpdateSubCategoryEvent(subCategoryValidated));
+                          print("we should update a subCategory in the list");
                         }else{
-                          _subCategoryBloc.add(CreateSubCategoryEvent(subCategoryValidated));
+                          widget.category.subCategories.add(subCategoryValidated);
+                          _categoryBloc.add(UpdateCategoryEvent(widget.category));
                         }
 
                         Navigator.of(context).pop();

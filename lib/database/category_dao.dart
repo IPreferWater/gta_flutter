@@ -16,11 +16,12 @@ class CategoryDao {
 
   Future update(Category category) async {
     final finder = Finder(filter: Filter.byKey(category.id));
-    await _categoryStore.update(
+    int updated = await _categoryStore.update(
       await _db,
       category.toMap(),
       finder: finder,
     );
+    print(updated);
   }
 
   Future delete(Category category) async {

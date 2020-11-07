@@ -25,7 +25,6 @@ class _SubCategoryScreenState extends State<SubCategoryScreen> {
 
   final label = TextEditingController();
 
-
   @override
   void initState(){
     super.initState();
@@ -36,6 +35,7 @@ class _SubCategoryScreenState extends State<SubCategoryScreen> {
 
   @override
   Widget build(BuildContext context) {
+    print('relooooooad');
     return
       Scaffold(
         appBar: AppBar(
@@ -70,7 +70,7 @@ class _SubCategoryScreenState extends State<SubCategoryScreen> {
             },
           ),
           AddButton(
-              formDialog: CategoryFormDialog()
+              formDialog: SubCategoryFormDialog(category: widget.category)
           ),
         ]
     );
