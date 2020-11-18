@@ -54,7 +54,7 @@ class _ItemScreenState extends State<ItemScreen> {
         children: <Widget>[
           _buildItemScreen(items),
           AddButton(
-              formDialog: ItemFormDialog(category: widget.category)
+              formDialog: ItemFormDialog(category: widget.category, subCategoryIndex: widget.subCategoryIndex)
           ),
         ]
     );

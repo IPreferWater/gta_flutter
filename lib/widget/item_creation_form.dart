@@ -3,17 +3,18 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:gta_flutter/model/category.dart';
 import 'package:gta_flutter/model/item.dart';
 import 'package:gta_flutter/model/parameter.dart';
-import 'package:gta_flutter/model/sub_category.dart';
+import 'package:gta_flutter/bloc/category_bloc/bloc.dart';
+
 
 class ItemFormDialog extends StatefulWidget{
 
-  final SubCategory subCategory;
   final Category category;
+  final int subCategoryIndex;
   final Item itemToUpdate;
 
   ItemFormDialog({
     @required this.category,
-    this.subCategory,
+    @required this.subCategoryIndex,
     this.itemToUpdate
   });
 
@@ -23,6 +24,7 @@ class ItemFormDialog extends StatefulWidget{
 class _ItemFormDialogState extends State<ItemFormDialog> {
 
   //ItemBloc _itemBloc;
+  CategoryBloc _categoryBloc;
   final _formKey = GlobalKey<FormState>();
   List<TextFormField> _parameters = new List();
 
@@ -30,8 +32,11 @@ class _ItemFormDialogState extends State<ItemFormDialog> {
   void initState(){
     super.initState();
 
+
   //  _itemBloc = BlocProvider.of<ItemBloc>(context);
    // _itemBloc.subCategory = widget.subCategory;
+    _categoryBloc = BlocProvider.of<CategoryBloc>(context);
+
 
     widget.category.parameters.forEach((parameter) => _parameters.add(
 
@@ -106,7 +111,11 @@ class _ItemFormDialogState extends State<ItemFormDialog> {
                         if(widget.itemToUpdate!=null){
                           // first delete it then add it again to change it
                           //_itemBloc.add(DeleteItem(itemValidated));
+                        }else {
+                          widget.category.subCategories[widget.subCategoryIndex].items.add(itemValidated);
                         }
+                        _categoryBloc.add(UpdateCategoryEvent(widget.category));
+
                         //  _itemBloc.add(InsertItem(itemValidated));
 
 
