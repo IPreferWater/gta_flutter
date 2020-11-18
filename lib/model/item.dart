@@ -11,7 +11,7 @@ class Item extends Equatable {
 
   Map<String, dynamic> toMap() {
     return {
-      'parameters': parameters.map((parameter) => parameter.toMap())
+      'parameters': parameters.map((parameter) => parameter.toMap()).toList(growable: false)
     };
   }
 
@@ -36,6 +36,6 @@ class Item extends Equatable {
 
   @override
   int get hashCode => runtimeType.hashCode;*/
-  @override
-  List<Object> get props => [parameters];
+ /* @override
+  List<Object> get props => [parameters];*/
 }

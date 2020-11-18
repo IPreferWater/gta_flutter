@@ -40,6 +40,6 @@ class Parameter extends Equatable {
   @override
   int get hashCode => key.hashCode ^ value.hashCode;*/
 
-  @override
-  List<Object> get props => [key,value];
+  /*@override
+  List<Object> get props => [key,value];*/
 }

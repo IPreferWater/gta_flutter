@@ -7,6 +7,8 @@ import 'package:gta_flutter/widget/add_button.dart';
 import 'package:gta_flutter/widget/carousel_slider.dart';
 import 'package:gta_flutter/widget/item_creation_form.dart';
 import 'package:gta_flutter/widget/item_pannel.dart';
+import 'package:gta_flutter/bloc/category_bloc/bloc.dart';
+
 
 class ItemScreen extends StatefulWidget{
 
@@ -23,15 +25,11 @@ class ItemScreen extends StatefulWidget{
 }
 class _ItemScreenState extends State<ItemScreen> {
 
-  //ItemBloc _itemBloc;
-
-
+  CategoryBloc _categoryBloc;
   @override
   void initState(){
     super.initState();
-   // _itemBloc = BlocProvider.of<ItemBloc>(context);
-   // _itemBloc.subCategory = widget.subCategory;
-   // _itemBloc.add(LoadItemsEvent());
+    _categoryBloc = BlocProvider.of<CategoryBloc>(context);
   }
 
   @override
@@ -53,37 +51,19 @@ class _ItemScreenState extends State<ItemScreen> {
     return     Column(
         children: <Widget>[
           _buildItemScreen(items),
-          AddButton(
-              formDialog: ItemFormDialog(category: widget.category, subCategoryIndex: widget.subCategoryIndex)
-          ),
+          FloatingActionButton(
+              child: Icon(Icons.add),
+              onPressed: () async {
+                Category updatedCategory = await showDialog(
+                  context: context,
+                  builder: (BuildContext context) =>
+                      ItemFormDialog(category: widget.category, subCategoryIndex: widget.subCategoryIndex),
+                );
+                _categoryBloc.add(UpdateCategoryEvent(updatedCategory));
+                setState(() {});
+              }),
         ]
     );
-  /*  return BlocBuilder(
-      bloc: _itemBloc,
-      builder: (BuildContext context, ItemState state){
-        if (state is ItemLoadingState){
-          return Center(
-            child: CircularProgressIndicator(),
-          );
-        } else if (state is ItemsLoadingSuccessState){
-          return
-            Column(
-                children: <Widget>[
-                  _buildItemScreen(state.items),
-                  AddButton(
-                      formDialog: ItemFormDialog(category: widget.category, subCategory: widget.subCategory)
-                  ),
-                ]
-            );
-        }
-
-        return Center(
-            child: Text(
-              "error ?",
-              textAlign: TextAlign.center,
-            ));
-      },
-    );*/
   }
 
   Widget _buildItemScreen(List<Item> items){
@@ -92,20 +72,33 @@ class _ItemScreenState extends State<ItemScreen> {
       return Text("no item yet");
     }
 
+    List<Widget> listItemPanels = new List<Widget>();
+    for(var i = 0; i < items.length; i++){
+      listItemPanels.add(new ItemPanel( item : items[i], itemIndex: i, showDialogEditItem:showDialogEditItem, deleteItem: deleteItem));
+    }
+
     return CarouselSlider(
-      items: <Widget>[
-        for ( var item in items ) ItemPanel(showDialogEditItem:showDialogEditItem, item : item)
-      ],
+      items: listItemPanels,
       autoPlay: false,
       enlargeCenterPage: true,
     );
   }
 
-   showDialogEditItem(Item item){
-    showDialog(
+   showDialogEditItem(int itemIndex) async {
+
+    Category updatedCategory = await showDialog(
       context: context,
-      builder: (BuildContext context) => ItemFormDialog(category: widget.category,  itemToUpdate: item),
+      builder: (BuildContext context) =>
+          ItemFormDialog(category: widget.category, subCategoryIndex: widget.subCategoryIndex,itemIndex: itemIndex),
     );
+    _categoryBloc.add(UpdateCategoryEvent(updatedCategory));
+    setState(() {});
+  }
+
+  deleteItem(int itemIndex){
+    widget.category.subCategories[widget.subCategoryIndex].items.removeAt(itemIndex);
+    _categoryBloc.add(UpdateCategoryEvent(widget.category));
+    setState(() {});
   }
 }
 

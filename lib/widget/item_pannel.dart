@@ -5,11 +5,15 @@ import 'package:gta_flutter/model/item.dart';
 class ItemPanel extends StatefulWidget{
 
   final Item item;
-  final void Function(Item item) showDialogEditItem;
+  final int itemIndex;
+  final void Function(int itemIndex) showDialogEditItem;
+  final void Function(int itemIndex) deleteItem;
 
   ItemPanel({
+    @required this.item,
+    @required this.itemIndex,
     @required this.showDialogEditItem,
-    @required this.item
+    @required this.deleteItem
   });
 
   _ItemPanelState createState() => _ItemPanelState();
@@ -17,16 +21,14 @@ class ItemPanel extends StatefulWidget{
 }
 class _ItemPanelState extends State<ItemPanel> {
 
- // ItemBloc _itemBloc;
-
   @override
   void initState(){
     super.initState();
-  //  _itemBloc = BlocProvider.of<ItemBloc>(context);
   }
 
   @override
   Widget build(BuildContext context) {
+
     return Column(
       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
       children: [
@@ -38,7 +40,7 @@ class _ItemPanelState extends State<ItemPanel> {
         child: Icon(Icons.edit),
         backgroundColor: Colors.green,
         onPressed: () {
-        widget.showDialogEditItem(widget.item);
+        widget.showDialogEditItem(widget.itemIndex);
         },
       ),
       FloatingActionButton(
@@ -46,6 +48,7 @@ class _ItemPanelState extends State<ItemPanel> {
         backgroundColor: Colors.red,
         onPressed: () {
         //  _itemBloc.add(DeleteItem(widget.item));
+          widget.deleteItem(widget.itemIndex);
         },
       )
       ])

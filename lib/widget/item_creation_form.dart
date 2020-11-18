@@ -10,12 +10,12 @@ class ItemFormDialog extends StatefulWidget{
 
   final Category category;
   final int subCategoryIndex;
-  final Item itemToUpdate;
+  final int itemIndex;
 
   ItemFormDialog({
     @required this.category,
     @required this.subCategoryIndex,
-    this.itemToUpdate
+    this.itemIndex
   });
 
   _ItemFormDialogState createState() => _ItemFormDialogState();
@@ -23,20 +23,12 @@ class ItemFormDialog extends StatefulWidget{
 }
 class _ItemFormDialogState extends State<ItemFormDialog> {
 
-  //ItemBloc _itemBloc;
-  CategoryBloc _categoryBloc;
   final _formKey = GlobalKey<FormState>();
   List<TextFormField> _parameters = new List();
 
   @override
   void initState(){
     super.initState();
-
-
-  //  _itemBloc = BlocProvider.of<ItemBloc>(context);
-   // _itemBloc.subCategory = widget.subCategory;
-    _categoryBloc = BlocProvider.of<CategoryBloc>(context);
-
 
     widget.category.parameters.forEach((parameter) => _parameters.add(
 
@@ -53,7 +45,7 @@ class _ItemFormDialogState extends State<ItemFormDialog> {
     )
       ));
 
-    if(this.widget.itemToUpdate!=null){
+    if(this.widget.itemIndex!=null){
       print("todo Edit item");
     }
   }
@@ -108,18 +100,14 @@ class _ItemFormDialogState extends State<ItemFormDialog> {
                           parameters: listParameters
                         );
 
-                        if(widget.itemToUpdate!=null){
-                          // first delete it then add it again to change it
-                          //_itemBloc.add(DeleteItem(itemValidated));
+                        if(widget.itemIndex!=null){
+                          widget.category.subCategories[widget.subCategoryIndex].items[widget.subCategoryIndex] = itemValidated ;
                         }else {
                           widget.category.subCategories[widget.subCategoryIndex].items.add(itemValidated);
                         }
-                        _categoryBloc.add(UpdateCategoryEvent(widget.category));
 
-                        //  _itemBloc.add(InsertItem(itemValidated));
+                        Navigator.pop(context, widget.category);
 
-
-                        Navigator.of(context).pop();
                       }
                     },
                     child: Text('Submit'),
