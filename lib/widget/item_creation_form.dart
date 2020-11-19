@@ -1,10 +1,8 @@
+
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:gta_flutter/model/category.dart';
 import 'package:gta_flutter/model/item.dart';
 import 'package:gta_flutter/model/parameter.dart';
-import 'package:gta_flutter/bloc/category_bloc/bloc.dart';
-
 
 class ItemFormDialog extends StatefulWidget{
 
@@ -30,24 +28,27 @@ class _ItemFormDialogState extends State<ItemFormDialog> {
   void initState(){
     super.initState();
 
-    widget.category.parameters.forEach((parameter) => _parameters.add(
+    List<Parameter> parameters;
+    if (this.widget.itemIndex != null){
+      Item item = this.widget.category.subCategories[widget.subCategoryIndex].items[widget.itemIndex];
+    parameters = item.parameters;
+    }else{
+      parameters = widget.category.parameters.map((e) => Parameter(key: e, value : "")).toList(growable: false);
+    }
+    parameters.forEach((p) => _parameters.add(
 
       new TextFormField(
-      controller: new TextEditingController(),
+      controller: new TextEditingController(text: p.value),
       decoration: InputDecoration(
         icon: Icon(Icons.person),
         hintText: 'Title of the after item',
-        labelText: parameter,
+        labelText: p.key,
       ),
       validator: (String value) {
         return value.isEmpty ? 'must not be empty' : null;
       }
     )
       ));
-
-    if(this.widget.itemIndex!=null){
-      print("todo Edit item");
-    }
   }
 
   @override
@@ -86,22 +87,19 @@ class _ItemFormDialogState extends State<ItemFormDialog> {
                   child: RaisedButton(
                     onPressed: () {
                       if (_formKey.currentState.validate()) {
-
-                        List<Parameter> listParameters = List();
-
-                        for (var i = 0; i < _parameters.length; i++) {
-                          String parameterValue = _parameters[i].controller.text;
-                          String parameterKey =  widget.category.parameters[i];
-                          Parameter newParameter = new Parameter(key: parameterKey, value: parameterValue);
-                          listParameters.add(newParameter);
-                        }
+                        
+                        List<Parameter> listParameters =  _parameters.asMap().entries.map((e) =>
+                            Parameter(
+                                key: widget.category.parameters[e.key],
+                                value : e.value.controller.text))
+                            .toList(growable: false);
 
                         Item itemValidated = new Item(
                           parameters: listParameters
                         );
 
                         if(widget.itemIndex!=null){
-                          widget.category.subCategories[widget.subCategoryIndex].items[widget.subCategoryIndex] = itemValidated ;
+                          widget.category.subCategories[widget.subCategoryIndex].items[widget.itemIndex] = itemValidated ;
                         }else {
                           widget.category.subCategories[widget.subCategoryIndex].items.add(itemValidated);
                         }
