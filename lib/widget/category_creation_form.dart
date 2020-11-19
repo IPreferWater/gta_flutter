@@ -2,8 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:gta_flutter/model/category.dart';
 import 'package:gta_flutter/widget/dynamic_list.dart';
 
-import 'category_parameter_text_form_field.dart';
-
 class CategoryFormDialog extends StatefulWidget{
 
   final Category categoryToUpdate;
