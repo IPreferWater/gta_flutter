@@ -63,9 +63,16 @@ class _HomeScreenState extends State<HomeScreen> {
                       );
                     },
                   ),
-                  AddButton(
-                    formDialog: CategoryFormDialog()
-                  ),
+                  FloatingActionButton(
+                    child: Icon(Icons.add),
+                      onPressed: () async {
+                      Category category = await showDialog(
+                          context: context,
+                        builder: (BuildContext context) =>
+                        CategoryFormDialog(),
+                        );
+                  _categoryBloc.add(CreateCategoryEvent(category));
+                      }),
                 ]
             );
         }
@@ -84,13 +91,14 @@ class _HomeScreenState extends State<HomeScreen> {
       children: <Widget>[
         IconButton(
           icon: Icon(Icons.edit),
-          onPressed: () {
-            showDialog(
+          onPressed: () async {
+            Category updatedCategory = await showDialog(
               context: context,
               builder: (BuildContext context) => CategoryFormDialog(
                 categoryToUpdate: categoryDisplayed,
               ),
             );
+            _categoryBloc.add(UpdateCategoryEvent(updatedCategory));
           },
         ),
         IconButton(

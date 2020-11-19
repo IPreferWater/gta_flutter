@@ -87,7 +87,7 @@ class _ItemFormDialogState extends State<ItemFormDialog> {
                   child: RaisedButton(
                     onPressed: () {
                       if (_formKey.currentState.validate()) {
-                        
+
                         List<Parameter> listParameters =  _parameters.asMap().entries.map((e) =>
                             Parameter(
                                 key: widget.category.parameters[e.key],

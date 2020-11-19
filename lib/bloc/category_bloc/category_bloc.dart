@@ -21,23 +21,22 @@ class CategoryBloc extends Bloc<CategoryEvent, CategoryState> {
 
     else if (event is CreateCategoryEvent){
       await _categoryDao.insert(event.category);
-      //yield* _reloadCategories();
+      yield* _reloadCategories();
     }
 
     else if (event is UpdateCategoryEvent){
       await _categoryDao.update(event.category);
-      //yield* _reloadCategories();
+      yield* _reloadCategories();
     }
 
     else if (event is DeleteCategoryEvent){
       await _categoryDao.delete(event.category);
-     // yield* _reloadCategories();
+      yield* _reloadCategories();
     }
   }
 
   Stream<CategoryState> _reloadCategories() async* {
     final categories = await _categoryDao.getAll();
-
     yield CategoriesLoadingSuccessState(categories);
   }
 }

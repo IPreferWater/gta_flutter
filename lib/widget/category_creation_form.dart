@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:gta_flutter/bloc/category_bloc/bloc.dart';
 import 'package:gta_flutter/model/category.dart';
+import 'package:gta_flutter/widget/dynamic_list.dart';
+
+import 'category_parameter_text_form_field.dart';
 
 class CategoryFormDialog extends StatefulWidget{
 
@@ -17,38 +18,20 @@ class CategoryFormDialog extends StatefulWidget{
 class _CategoryFormDialogState extends State<CategoryFormDialog> {
 
   FocusNode myFocusNode;
-  CategoryBloc _categoryBloc;
 
   final _formKey = GlobalKey<FormState>();
-  final label = TextEditingController();
-  List<TextFormField> _parameters = new List();
-
-
-  Category category;
+  final labelController = TextEditingController();
+  List<TextFormField> _parameters =  List();
 
   @override
   void initState(){
     super.initState();
-    myFocusNode = FocusNode();
 
-    _categoryBloc = BlocProvider.of<CategoryBloc>(context);
-
-    if(this.widget.categoryToUpdate!=null){
-      category = this.widget.categoryToUpdate;
-      label.text = category.label;
-      category.parameters.forEach((parameter) {
+    if(widget.categoryToUpdate!=null){
+      labelController.text = widget.categoryToUpdate.label;
+      widget.categoryToUpdate.parameters.forEach((parameter) {
         _parameters.add(
-            new TextFormField(
-              controller: new TextEditingController(text: parameter),
-              decoration: const InputDecoration(
-                icon: Icon(Icons.person),
-                hintText: 'Title of the after item',
-                labelText: 'Title',
-              ),
-              validator: (String value) {
-                return value.isEmpty ? 'must not be empty' : null;
-              },
-            )
+            buildTextFormField(parameter)
         );
       });
     }
@@ -70,7 +53,7 @@ class _CategoryFormDialogState extends State<CategoryFormDialog> {
             padding: const EdgeInsets.all(8),
             children: <Widget>[
               TextFormField(
-                controller: label,
+                controller: labelController,
                 decoration: const InputDecoration(
                   icon: Icon(Icons.person),
                   hintText: 'Title of the before item',
@@ -81,52 +64,15 @@ class _CategoryFormDialogState extends State<CategoryFormDialog> {
                 },
               ),
 
-        ListView.builder(
-          shrinkWrap: true,
-          itemCount: _parameters.length,
-          key: UniqueKey(),
+        DynamicList(parameters: _parameters),
 
-          itemBuilder: (context, index) {
-              return Row(
-                mainAxisSize: MainAxisSize.min,
-                children: <Widget>[
-                  Expanded(
-                    child: _parameters[index]
-                  ),
-                  IconButton(
-                    icon: Icon(Icons.edit),
-                    onPressed: () {
-
-                    },
-                  ),
-                  IconButton(
-                    icon: Icon(Icons.delete_outline),
-                    onPressed: () {
-                      _parameters.removeAt(index);
-                      this.setState((){});
-                    },
-                  ),
-                ],
-              );
-          },
-        ),
               FloatingActionButton(
                 child: Icon(Icons.add),
                 onPressed: () {
-                  //_parameters.add(new TextEditingController());
-                  _parameters.add(
-                      new TextFormField(
-                    controller: new TextEditingController(),
-                    decoration: const InputDecoration(
-                      icon: Icon(Icons.person),
-                      hintText: 'Title of the after item',
-                      labelText: 'Title',
-                    ),
-                    validator: (String value) {
-                      return value.isEmpty ? 'must not be empty' : null;
-                    },
-                  ));
-                  this.setState((){});
+                  TextFormField newTextFormField = buildTextFormField("");
+                  this.setState((){
+                    _parameters.add(newTextFormField);
+                  });
                 },
               ),
               Padding(
@@ -136,17 +82,14 @@ class _CategoryFormDialogState extends State<CategoryFormDialog> {
                       if (_formKey.currentState.validate()) {
                         List<String> listParameters = _parameters.map((parameter) => parameter.controller.text).toList();
                         final categoryValidated = Category(
-                          label: label.text,
+                          label: labelController.text,
                           parameters : listParameters
                         );
 
                         if(widget.categoryToUpdate!=null){
                           categoryValidated.id = widget.categoryToUpdate.id;
-                          _categoryBloc.add(UpdateCategoryEvent(categoryValidated));
-                        }else{
-                          _categoryBloc.add(CreateCategoryEvent(categoryValidated));
                         }
-                        Navigator.of(context).pop();
+                        Navigator.pop(context, categoryValidated);
                       }
                     },
                     child: Text('Submit'),
@@ -155,4 +98,21 @@ class _CategoryFormDialogState extends State<CategoryFormDialog> {
         )
     );
   }
+  TextFormField buildTextFormField(String parameter){
+    return TextFormField(
+      controller:  TextEditingController(text: parameter),
+      autofocus: true,
+      decoration: const InputDecoration(
+        icon: Icon(Icons.person),
+        hintText: 'Title of the after item',
+        labelText: 'Title',
+      ),
+      validator: (String value) {
+        return value.isEmpty ? 'must not be empty' : null;
+      },
+    );
+  }
+
 }
+
+
