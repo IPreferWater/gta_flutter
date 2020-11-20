@@ -86,6 +86,7 @@ class _CategoryFormDialogState extends State<CategoryFormDialog> {
 
                         if(widget.categoryToUpdate!=null){
                           categoryValidated.id = widget.categoryToUpdate.id;
+                          categoryValidated.subCategories = widget.categoryToUpdate.subCategories;
                         }
                         Navigator.pop(context, categoryValidated);
                       }

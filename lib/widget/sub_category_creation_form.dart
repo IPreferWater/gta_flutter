@@ -63,6 +63,7 @@ class _SubCategoryFormDialogState extends State<SubCategoryFormDialog> {
                       if (_formKey.currentState.validate()) {
                         final subCategoryValidated = SubCategory(label: label.text, categoryId: widget.category.id);
                         if(widget.subCategoryIndexToUpdate!=null){
+                          subCategoryValidated.items = widget.category.subCategories[widget.subCategoryIndexToUpdate].items;
                           widget.category.subCategories[widget.subCategoryIndexToUpdate]= subCategoryValidated;
                         }else{
                           widget.category.subCategories.add(subCategoryValidated);
