@@ -32,7 +32,7 @@ class _ItemPanelState extends State<ItemPanel> {
     return Column(
       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
       children: [
-        Text(widget.item.toString()),
+        _buildListParameterWidget(widget.item.parameters),
     Row(
     mainAxisSize: MainAxisSize.min,
     children: <Widget>[
@@ -47,12 +47,17 @@ class _ItemPanelState extends State<ItemPanel> {
         child: Icon(Icons.delete),
         backgroundColor: Colors.red,
         onPressed: () {
-        //  _itemBloc.add(DeleteItem(widget.item));
           widget.deleteItem(widget.itemIndex);
         },
       )
       ])
       ],
     );
+  }
+
+  Widget _buildListParameterWidget (List<String> itemParameters){
+
+    List<Text> dd =  itemParameters.map((e) => Text(e)).toList(growable: false);
+        return Column(children: dd);
   }
 }

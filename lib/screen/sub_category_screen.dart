@@ -44,7 +44,7 @@ class _SubCategoryScreenState extends State<SubCategoryScreen> {
           final displayedSubCategory = widget.category.subCategories[index];
           return ListTile(
             title: Text(displayedSubCategory.label),
-            subtitle: Text('label : ${displayedSubCategory.label}'),
+            subtitle: Text('2/2'),
             trailing: _buildUpdateDeleteSubCategory(index),
             onTap: () {
               Navigator.push(

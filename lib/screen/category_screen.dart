@@ -51,9 +51,8 @@ class _HomeScreenState extends State<HomeScreen> {
                     itemBuilder: (context, index) {
                       final displayedCategory = state.categories[index];
                       return ListTile(
-                        title: Text(displayedCategory.id.toString()),
-                        subtitle: Text(
-                            'id : ${displayedCategory.id} label : ${displayedCategory.label}'),
+                        leading: Icon(Icons.menu_book),
+                        title: Text(displayedCategory.label),
                         trailing: _buildUpdateDeleteQrCode(displayedCategory),
                         onTap: () {
                           Navigator.push(context,
