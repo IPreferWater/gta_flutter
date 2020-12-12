@@ -2,7 +2,6 @@
 import 'package:flutter/material.dart';
 import 'package:gta_flutter/model/category.dart';
 import 'package:gta_flutter/model/item.dart';
-import 'package:gta_flutter/model/parameter.dart';
 
 class ItemFormDialog extends StatefulWidget{
 
@@ -28,21 +27,23 @@ class _ItemFormDialogState extends State<ItemFormDialog> {
   void initState(){
     super.initState();
 
-    List<Parameter> parameters;
-    if (this.widget.itemIndex != null){
-      Item item = this.widget.category.subCategories[widget.subCategoryIndex].items[widget.itemIndex];
+    List<String> parameters;
+    if (widget.itemIndex != null){
+      Item item = widget.category.subCategories[widget.subCategoryIndex].items[widget.itemIndex];
     parameters = item.parameters;
     }else{
-      parameters = widget.category.parameters.map((e) => Parameter(key: e, value : "")).toList(growable: false);
+      // for each avalaible parameters, add an empty string
+      parameters = widget.category.parameters.map((e) =>  "").toList(growable: false);
     }
-    parameters.forEach((p) => _parameters.add(
+
+    widget.category.parameters.asMap().forEach((index, p) => _parameters.add(
 
       new TextFormField(
-      controller: new TextEditingController(text: p.value),
+      controller: new TextEditingController(text: parameters[index]),
       decoration: InputDecoration(
         icon: Icon(Icons.person),
         hintText: 'Title of the after item',
-        labelText: p.key,
+        labelText: p,
       ),
       validator: (String value) {
         return value.isEmpty ? 'must not be empty' : null;
@@ -88,11 +89,9 @@ class _ItemFormDialogState extends State<ItemFormDialog> {
                     onPressed: () {
                       if (_formKey.currentState.validate()) {
 
-                        List<Parameter> listParameters =  _parameters.asMap().entries.map((e) =>
-                            Parameter(
-                                key: widget.category.parameters[e.key],
-                                value : e.value.controller.text))
-                            .toList(growable: false);
+                        List<String> listParameters = _parameters.asMap().entries.map((e) =>
+                        e.value.controller.text
+                        ).toList(growable: false);
 
                         Item itemValidated = new Item(
                           parameters: listParameters
