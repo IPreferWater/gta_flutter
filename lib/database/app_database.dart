@@ -42,7 +42,44 @@ class AppDatabase {
     // Path with the form: /platform-specific-directory/demo.db
     final dbPath = join(appDocumentDir.path, 'demo.db');
 
-    final database = await databaseFactoryIo.openDatabase(dbPath);
+    final exampleDataBD = {
+      'id':1,
+    'label':'bd',
+    'parameters':['tome','state'],
+    'subCategories':[
+      {
+        'label':'kidPaddle',
+        'categoryId':1,
+        'items' : [
+          {
+            'parameters' : ['1 jeux de vilains','good']
+          },
+          {
+            'parameters' : ['2 carnage total','bad']
+          }
+        ]
+      },
+      {
+        'label':'Mademoiselle Louise',
+        'categoryId':1,
+        'items' : [
+          {
+            'parameters' : ['1 un papa cadeau','good']
+          },
+          {
+            'parameters' : ['2 chere petit tresor','bad']
+          }
+        ]
+      }
+    ]};
+    var store = intMapStoreFactory.store('categories');
+    final database = await databaseFactoryIo.openDatabase(dbPath, version: 1,
+        onVersionChanged:  (db, oldVersion, newVersion) async {
+          // If the db does not exist, create some data
+          if (oldVersion == 0) {
+            await store.add(db, exampleDataBD);
+           }
+        });
     // Any code awaiting the Completer's future will now start executing
     _dbOpenCompleter.complete(database);
   }
