@@ -49,7 +49,6 @@ class AppDatabase {
     'subCategories':[
       {
         'label':'kidPaddle',
-        'categoryId':1,
         'items' : [
           {
             'parameters' : ['1 jeux de vilains','good']
@@ -61,7 +60,6 @@ class AppDatabase {
       },
       {
         'label':'Mademoiselle Louise',
-        'categoryId':1,
         'items' : [
           {
             'parameters' : ['1 un papa cadeau','good']

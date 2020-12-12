@@ -4,19 +4,16 @@ import 'package:meta/meta.dart';
 
 class SubCategory {
 
-  int categoryId;
   String label;
   List<Item> items = <Item>[];
 
   SubCategory({
     @required this.label,
-    @required this.categoryId,
     this.items }) { items ??= <Item>[];}
 
   Map<String, dynamic> toMap() {
     return {
       'label' : label,
-      'categoryId': categoryId,
       'items': items.map((item) => item.toMap()).toList(growable : false)
     };
   }
@@ -25,7 +22,6 @@ class SubCategory {
 
     return SubCategory(
         label: map['label'],
-        categoryId: map['categoryId'],
         items: map['items'].map((mapping) => Item.fromMap(mapping)).toList().cast<Item>());
   }
 
@@ -33,7 +29,6 @@ class SubCategory {
   String toString() {
     return 'SubCategory{ \n'
         ' label : $label,\n'
-        ' categoryId: $categoryId,\n'
         ' items: $items}\n';
   }
 
