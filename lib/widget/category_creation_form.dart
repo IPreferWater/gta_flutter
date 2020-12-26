@@ -53,9 +53,9 @@ class _CategoryFormDialogState extends State<CategoryFormDialog> {
               TextFormField(
                 controller: labelController,
                 decoration: const InputDecoration(
-                  icon: Icon(Icons.person),
-                  hintText: 'Title of the before item',
-                  labelText: 'Title',
+                  icon: Icon(Icons.label),
+                  hintText: 'title of the category',
+                  labelText : 'category title',
                 ),
                 validator: (String value) {
                   return value.isEmpty ? 'must not be empty' : null;
@@ -64,15 +64,24 @@ class _CategoryFormDialogState extends State<CategoryFormDialog> {
 
         DynamicList(parameters: _parameters),
 
-              FloatingActionButton(
-                child: Icon(Icons.add),
-                onPressed: () {
-                  TextFormField newTextFormField = buildTextFormField("");
-                  this.setState((){
-                    _parameters.add(newTextFormField);
-                  });
-                },
+              Container(
+                height: 50.0,
+                margin: const EdgeInsets.only(top: 20.0),               // width: MediaQuery.of(context).size.width * 0.5,
+                child: FittedBox(
+                  child: FloatingActionButton.extended(
+                    icon: Icon(Icons.add),
+                    label: Text('add parameter'),
+                    onPressed: () {
+                      TextFormField newTextFormField = buildTextFormField("");
+                      this.setState((){
+                        _parameters.add(newTextFormField);
+                      });
+                    },
+                  ),
+                ),
               ),
+
+
               Padding(
                   padding: const EdgeInsets.symmetric(vertical: 16.0),
                   child: RaisedButton(
@@ -103,8 +112,8 @@ class _CategoryFormDialogState extends State<CategoryFormDialog> {
       autofocus: true,
       decoration: const InputDecoration(
         icon: Icon(Icons.person),
-        hintText: 'Title of the after item',
-        labelText: 'Title',
+        hintText: 'new paramater name',
+        labelText: 'parameter name',
       ),
       validator: (String value) {
         return value.isEmpty ? 'must not be empty' : null;
