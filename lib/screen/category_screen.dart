@@ -62,8 +62,9 @@ class _HomeScreenState extends State<HomeScreen> {
                       );
                     },
                   ),
-                  FloatingActionButton(
-                    child: Icon(Icons.add),
+                  FloatingActionButton.extended(
+                    icon: Icon(Icons.add),
+                      label: Text('create category'),
                       onPressed: () async {
                       Category category = await showDialog(
                           context: context,

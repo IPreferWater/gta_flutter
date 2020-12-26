@@ -49,13 +49,14 @@ class _SubCategoryFormDialogState extends State<SubCategoryFormDialog> {
                 controller: label,
                 decoration: const InputDecoration(
                   icon: Icon(Icons.person),
-                  hintText: 'Title of the before item',
-                  labelText: 'Title',
+                  hintText: 'name of the group of items',
+                  labelText: 'group name',
                 ),
                 validator: (String value) {
                   return value.isEmpty ? 'must not be empty' : null;
                 },
               ),
+
               Padding(
                   padding: const EdgeInsets.symmetric(vertical: 16.0),
                   child: RaisedButton(

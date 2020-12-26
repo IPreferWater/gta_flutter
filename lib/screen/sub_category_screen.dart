@@ -28,7 +28,7 @@ class _SubCategoryScreenState extends State<SubCategoryScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Sub Categories'),
+        title: Text('Groups'),
         actions: <Widget>[],
       ),
       body: _creationMenu(),
@@ -56,8 +56,10 @@ class _SubCategoryScreenState extends State<SubCategoryScreen> {
           );
         },
       ),
-      FloatingActionButton(
-          child: Icon(Icons.add),
+      FloatingActionButton.extended(
+
+          icon: Icon(Icons.add),
+          label: Text('create group of items'),
           onPressed: () async {
             Category updatedCategory = await showDialog(
               context: context,

@@ -51,8 +51,9 @@ class _ItemScreenState extends State<ItemScreen> {
     return     Column(
         children: <Widget>[
           _buildItemScreen(items),
-          FloatingActionButton(
-              child: Icon(Icons.add),
+          FloatingActionButton.extended(
+            label: Text('add new item'),
+              icon: Icon(Icons.add),
               onPressed: () async {
                 Category updatedCategory = await showDialog(
                   context: context,

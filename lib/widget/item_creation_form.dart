@@ -42,7 +42,7 @@ class _ItemFormDialogState extends State<ItemFormDialog> {
       controller: new TextEditingController(text: parameters[index]),
       decoration: InputDecoration(
         icon: Icon(Icons.person),
-        hintText: 'Title of the after item',
+        hintText: p,
         labelText: p,
       ),
       validator: (String value) {
