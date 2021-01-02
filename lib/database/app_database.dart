@@ -51,10 +51,12 @@ class AppDatabase {
         'label':'kidPaddle',
         'items' : [
           {
-            'parameters' : ['1 jeux de vilains','good']
+            'parameters' : ['1 jeux de vilains','good'],
+            'have' : true
           },
           {
-            'parameters' : ['2 carnage total','bad']
+            'parameters' : ['2 carnage total','bad'],
+            'have' : false
           }
         ]
       },
@@ -62,10 +64,12 @@ class AppDatabase {
         'label':'Mademoiselle Louise',
         'items' : [
           {
-            'parameters' : ['1 un papa cadeau','good']
+            'parameters' : ['1 un papa cadeau','good'],
+            'have' : false
           },
           {
-            'parameters' : ['2 chere petit tresor','bad']
+            'parameters' : ['2 chere petit tresor','bad'],
+            'have' : true
           }
         ]
       }

@@ -22,18 +22,22 @@ class _ItemFormDialogState extends State<ItemFormDialog> {
 
   final _formKey = GlobalKey<FormState>();
   List<TextFormField> _parameters = new List();
+  bool _have;
 
   @override
   void initState(){
     super.initState();
 
     List<String> parameters;
+
     if (widget.itemIndex != null){
       Item item = widget.category.subCategories[widget.subCategoryIndex].items[widget.itemIndex];
     parameters = item.parameters;
+    _have = item.have;
     }else{
       // for each avalaible parameters, add an empty string
       parameters = widget.category.parameters.map((e) =>  "").toList(growable: false);
+     _have = false;
     }
 
     widget.category.parameters.asMap().forEach((index, p) => _parameters.add(
@@ -77,12 +81,25 @@ class _ItemFormDialogState extends State<ItemFormDialog> {
           mainAxisSize: MainAxisSize.min,
           children: <Widget>[
             Expanded(
-              child: _parameters[index]
+              child: _parameters[index],
+
             )
             ]
       );
     }
         ),
+              SwitchListTile (
+                title: Text("Do you have it ?"),
+                subtitle: Text(_have ? "yes":"no"),
+                value: _have,
+                onChanged: (value) {
+                  setState(() {
+                    _have = value;
+                  });
+                },
+                activeTrackColor: Colors.lightGreenAccent,
+                activeColor: Colors.green,
+              ),
               Padding(
                   padding: const EdgeInsets.symmetric(vertical: 16.0),
                   child: RaisedButton(
@@ -94,7 +111,8 @@ class _ItemFormDialogState extends State<ItemFormDialog> {
                         ).toList(growable: false);
 
                         Item itemValidated = new Item(
-                          parameters: listParameters
+                          parameters: listParameters,
+                          have: _have
                         );
 
                         if(widget.itemIndex!=null){

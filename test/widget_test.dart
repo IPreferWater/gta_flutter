@@ -51,9 +51,32 @@ void main() {
   });*/
 
   testWidgets('xxxxx', (WidgetTester tester) async {
-    var category = Category(label: "bonjour", parameters: ["20", "3005", "2"]);
-    var res = category.toMap();
-    print(res);
+    /*final paramA1 = Parameter(key: "name", value: "A");
+    final paramA2 = Parameter(key: "state", value: "good");
+    List<Parameter> parametersA = [ paramA1, paramA2];
+    final itemA1 = Item(parameters: parametersA);
+
+    final paramB1 = Parameter(key: "name", value: "B");
+    final paramB2 = Parameter(key: "state", value: "bad");
+    List<Parameter> parametersB = [ paramB1, paramB2];
+    final itemB1 = Item(parameters: parametersB);
+
+    List<Item> items = [itemA1, itemB1];
+    final subCategory = SubCategory(label: "1", categoryId: 1, items: items);
+    List <String> parametersCategory = ["name","state"];
+    var category = Category(label: "test", parameters: parametersCategory, subCategories: [subCategory]);
+
+    final actualParameters1 = category.subCategories[0].items[0].parameters;
+    expect(actualParameters1[0].key,"name");
+    expect(actualParameters1[0].value,"A");
+    expect(actualParameters1[1].key,"newState");
+    expect(actualParameters1[1].value,"good");
+
+    final actualParameters2 = category.subCategories[0].items[0].parameters;
+    expect(actualParameters2[0].key,"name");
+    expect(actualParameters2[0].value,"B");
+    expect(actualParameters2[1].value,"newState");
+    expect(actualParameters2[1].value,"bad");*/
 
   });
 

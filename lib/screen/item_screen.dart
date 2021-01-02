@@ -2,8 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:gta_flutter/model/category.dart';
 import 'package:gta_flutter/model/item.dart';
-import 'package:gta_flutter/model/sub_category.dart';
-import 'package:gta_flutter/widget/add_button.dart';
 import 'package:gta_flutter/widget/carousel_slider.dart';
 import 'package:gta_flutter/widget/item_creation_form.dart';
 import 'package:gta_flutter/widget/item_pannel.dart';
@@ -75,7 +73,7 @@ class _ItemScreenState extends State<ItemScreen> {
 
     List<Widget> listItemPanels = new List<Widget>();
     for(var i = 0; i < items.length; i++){
-      listItemPanels.add(new ItemPanel( item : items[i], itemIndex: i, showDialogEditItem:showDialogEditItem, deleteItem: deleteItem));
+      listItemPanels.add(new ItemPanel( item : items[i], itemIndex: i, showDialogEditItem:showDialogEditItem, deleteItem: deleteItem, setHaveItem: setHaveItem,));
     }
 
     return CarouselSlider(
@@ -98,6 +96,12 @@ class _ItemScreenState extends State<ItemScreen> {
 
   deleteItem(int itemIndex){
     widget.category.subCategories[widget.subCategoryIndex].items.removeAt(itemIndex);
+    _categoryBloc.add(UpdateCategoryEvent(widget.category));
+    setState(() {});
+  }
+
+  setHaveItem(int itemIndex, bool have){
+    widget.category.subCategories[widget.subCategoryIndex].items[itemIndex].have = have;
     _categoryBloc.add(UpdateCategoryEvent(widget.category));
     setState(() {});
   }

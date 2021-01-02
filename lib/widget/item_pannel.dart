@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:gta_flutter/model/item.dart';
 
 class ItemPanel extends StatefulWidget{
@@ -8,12 +7,14 @@ class ItemPanel extends StatefulWidget{
   final int itemIndex;
   final void Function(int itemIndex) showDialogEditItem;
   final void Function(int itemIndex) deleteItem;
+  final void Function(int itemIndex, bool have) setHaveItem;
 
   ItemPanel({
     @required this.item,
     @required this.itemIndex,
     @required this.showDialogEditItem,
-    @required this.deleteItem
+    @required this.deleteItem,
+    @required this.setHaveItem
   });
 
   _ItemPanelState createState() => _ItemPanelState();
@@ -33,6 +34,19 @@ class _ItemPanelState extends State<ItemPanel> {
       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
       children: [
         _buildListParameterWidget(widget.item.parameters),
+        SwitchListTile (
+          title: Text("Do you have it ?"),
+          subtitle: Text(widget.item.have ? "yes":"no"),
+          value: widget.item.have,
+          onChanged: (value) {
+            widget.setHaveItem(widget.itemIndex, value);
+           /* setState(() {
+              widget.item.have = value;
+            });*/
+          },
+          activeTrackColor: Colors.lightGreenAccent,
+          activeColor: Colors.green,
+        ),
     Row(
     mainAxisSize: MainAxisSize.min,
     children: <Widget>[
