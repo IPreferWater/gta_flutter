@@ -2,6 +2,7 @@
 import 'package:flutter/material.dart';
 import 'package:gta_flutter/model/category.dart';
 import 'package:gta_flutter/model/item.dart';
+import 'package:gta_flutter/widget/switch_have.dart';
 
 class ItemFormDialog extends StatefulWidget{
 
@@ -88,17 +89,9 @@ class _ItemFormDialogState extends State<ItemFormDialog> {
       );
     }
         ),
-              SwitchListTile (
-                title: Text("Do you have it ?"),
-                subtitle: Text(_have ? "yes":"no"),
-                value: _have,
-                onChanged: (value) {
-                  setState(() {
-                    _have = value;
-                  });
-                },
-                activeTrackColor: Colors.lightGreenAccent,
-                activeColor: Colors.green,
+              SwitchHave(
+                  onSwitch: (bool value)=>_have = value ,
+                  switchBool: _have
               ),
               Padding(
                   padding: const EdgeInsets.symmetric(vertical: 16.0),
