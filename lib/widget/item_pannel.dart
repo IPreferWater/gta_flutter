@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:gta_flutter/model/item.dart';
+import 'package:gta_flutter/widget/switch_have.dart';
+
 
 class ItemPanel extends StatefulWidget{
 
@@ -34,18 +36,9 @@ class _ItemPanelState extends State<ItemPanel> {
       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
       children: [
         _buildListParameterWidget(widget.item.parameters),
-        SwitchListTile (
-          title: Text("Do you have it ?"),
-          subtitle: Text(widget.item.have ? "yes":"no"),
-          value: widget.item.have,
-          onChanged: (value) {
-            widget.setHaveItem(widget.itemIndex, value);
-           /* setState(() {
-              widget.item.have = value;
-            });*/
-          },
-          activeTrackColor: Colors.lightGreenAccent,
-          activeColor: Colors.green,
+        SwitchHave(
+            onSwitch: (bool value)=> widget.setHaveItem(widget.itemIndex, value) ,
+            switchBool: widget.item.have
         ),
     Row(
     mainAxisSize: MainAxisSize.min,
