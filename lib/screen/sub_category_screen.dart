@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:gta_flutter/model/category.dart';
+import 'package:gta_flutter/model/item.dart';
+import 'package:gta_flutter/model/sub_category.dart';
 import 'package:gta_flutter/screen/item_screen.dart';
 import 'package:gta_flutter/widget/sub_category_creation_form.dart';
 import 'package:gta_flutter/bloc/category_bloc/bloc.dart';
@@ -35,6 +37,12 @@ class _SubCategoryScreenState extends State<SubCategoryScreen> {
     );
   }
 
+  String getItemHaveOnItemSize(SubCategory s){
+        var itemHave = s.items.where((item) => item.have == true);
+        int itemHaveSize = itemHave.length;
+        int itemSize =  s.items.length;
+      return '$itemHaveSize/$itemSize';
+  }
   Widget _creationMenu() {
     return Column(children: <Widget>[
       ListView.builder(
@@ -44,7 +52,7 @@ class _SubCategoryScreenState extends State<SubCategoryScreen> {
           final displayedSubCategory = widget.category.subCategories[index];
           return ListTile(
             title: Text(displayedSubCategory.label),
-            subtitle: Text('2/2'),
+            subtitle: Text(getItemHaveOnItemSize(displayedSubCategory)),
             trailing: _buildUpdateDeleteSubCategory(index),
             onTap: () {
               Navigator.push(
