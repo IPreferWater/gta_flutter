@@ -41,20 +41,25 @@ class _ItemFormDialogState extends State<ItemFormDialog> {
      _have = false;
     }
 
-    widget.category.parameters.asMap().forEach((index, p) => _parameters.add(
+    var itemParametersAsMap = parameters.asMap();
+    widget.category.parameters.asMap().forEach((index, p) {
+      //if the category have changed, the item might have different list parameter size
+      String parameter = safeGetItemValue(itemParametersAsMap, index);
+      _parameters.add(
+          new TextFormField(
+              controller: new TextEditingController(text: parameter),
+              decoration: InputDecoration(
+                icon: Icon(Icons.person),
+                hintText: p,
+                labelText: p,
+              ),
+              validator: (String value) {
+                return value.isEmpty ? 'must not be empty' : null;
+              }
+          )
+      );
+    });
 
-      new TextFormField(
-      controller: new TextEditingController(text: parameters[index]),
-      decoration: InputDecoration(
-        icon: Icon(Icons.person),
-        hintText: p,
-        labelText: p,
-      ),
-      validator: (String value) {
-        return value.isEmpty ? 'must not be empty' : null;
-      }
-    )
-      ));
   }
 
   @override
@@ -123,5 +128,13 @@ class _ItemFormDialogState extends State<ItemFormDialog> {
             ]
         )
     );
+  }
+
+  String safeGetItemValue(Map<int, String> itemParametersAsMap, int index){
+    if (itemParametersAsMap.containsKey(index)) {
+      return itemParametersAsMap.values.elementAt(index);
+    }
+
+    return "";
   }
 }
